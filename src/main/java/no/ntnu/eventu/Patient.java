@@ -1,0 +1,61 @@
+package no.ntnu.eventu;
+
+
+public class Patient {
+    String ssn;
+    String firstName;
+    String lastName;
+    String diagnosis;
+    String generalPractitioner;
+
+    public Patient(String ssn, String firstName, String lastName, String diagnosis, String generalPractitioner) {
+        this.ssn = ssn;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.diagnosis = diagnosis;
+        this.generalPractitioner = generalPractitioner;
+    }
+
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getGeneralPractitioner() {
+        return generalPractitioner;
+    }
+
+    public void setGeneralPractitioner(String generalPractitioner) {
+        this.generalPractitioner = generalPractitioner;
+    }
+
+
+}
