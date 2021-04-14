@@ -1,0 +1,43 @@
+/**
+Stylesheet for primary controller
+Created 14.04.2021
+ */
+
+.addUserBtn{
+
+}
+
+.addPatientBtn {
+    -fx-background-image: url("./images/adduser.png");
+    -fx-background-size: 30px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.editPatientBtn {
+    -fx-background-image: url("./images/edituser.png");
+    -fx-background-size: 30px;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+}
+
+.removePatientBtn {
+    -fx-background-image: url("./images/removeuser.png");
+    -fx-background-size: 30px;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+}
+
+.loadBtn {
+    -fx-background-image: url("./images/load.png");
+    -fx-background-size: 30px;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+}
+
+.saveBtn {
+    -fx-background-image: url("./images/save.png");
+    -fx-background-size: 30px;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+}
