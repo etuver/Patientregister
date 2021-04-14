@@ -8,12 +8,20 @@ import java.util.regex.Pattern;
 
 public class PatientRegister {
 
-    public ArrayList<Patient> patients = new ArrayList<>();
+    private String registerName;
+    private ArrayList<Patient> patients;
+
+    public PatientRegister(String registerName){
+        this.registerName = registerName;
+        this.patients = new ArrayList<>();
+    }
+
+
 
 
     /**
      * Method to register a new patient
-     * Checks if patient with chosen ssn allready exists
+     * Checks if patient with chosen ssn allready exists as two persons can`t have the same ssn
      * Checks if chosen ssn is a valid ssn
      * @param ssn sosial security number
      * @param firstName first name
@@ -22,19 +30,31 @@ public class PatientRegister {
      * @param generalPractitioner name of general practitioner
      */
     public void registerPatient(String ssn, String firstName, String lastName, String diagnosis, String generalPractitioner){
+        if (ssn.equals("") || firstName.equals("") || lastName.equals("")){
+            throw new IllegalArgumentException("ssn, first name or last name can`t be null");
+        }
         for (int i = 0; i < patients.size(); i++){
             if (patients.get(i).getSsn().equals(ssn)){
-                System.out.println("A patient with chosen ssn already exists");
+                throw new IllegalArgumentException("A patient with chosen ssn already exists");
+                //System.out.println("A patient with chosen ssn already exists");
             }
         }
         Patient newPatient = new Patient(ssn, firstName, lastName, diagnosis ,generalPractitioner);
         if (!ssnValidator(ssn)){
-            System.out.println("Invalid ssn. A ssn has the format ddmmyynnnnn");
+            throw new IllegalArgumentException("Invalid ssn. A ssn has the format ddmmyynnnnn");
+            //System.out.println("Invalid ssn. A ssn has the format ddmmyynnnnn");
         }else  {
             patients.add(newPatient);
         }
     }
 
+
+    /**
+     * Method to add diagnosis to a patient
+     * @param ssn social security number of the patient
+     * @param diagnosis the diagnosis
+     * @return true if successfully added
+     */
     public boolean registerDiagnosis(String ssn, String diagnosis){
         boolean success = false;
         for (int i = 0; i < patients.size(); i++){
@@ -48,8 +68,12 @@ public class PatientRegister {
     }
 
 
+    /**
+     * Method to remove a patient from the register
+     * @param ssn ssn of the patient to remove
+     */
     public void removePatient(String ssn){
-        if (ssn == null || ssn == ""){
+        if (ssn == null || ssn.equals("")){
             throw new NullPointerException("ssn cant be null");
         }
         for (int i = 0; i < patients.size(); i++){
@@ -63,7 +87,7 @@ public class PatientRegister {
 
     /**
      * SSN-validator
-     * Using regex might be a bit overkill on this assignment, but it
+     * Using regex might be a bit overkill on this assignment, but it is nice to practice and works well
      * @param ssn
      * Two first digits is the day. A valid day is any from 01-31. not taking leap year, months or D-nr into consideration
      * Digit 3 and 4 is month. A valid month is from 01-12
@@ -79,24 +103,26 @@ public class PatientRegister {
     }
 
 
+    /**
+     * Method to get size of the list
+     * @return size
+     */
+    public int getRegisterSize(){
+        return patients.size();
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     //editpatient
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
