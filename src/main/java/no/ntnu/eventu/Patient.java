@@ -2,11 +2,11 @@ package no.ntnu.eventu;
 
 
 public class Patient {
-    String ssn;
-    String firstName;
-    String lastName;
-    String diagnosis;
-    String generalPractitioner;
+    String ssn; //Social security number. Unique for any person
+    String firstName; // First name of the patient
+    String lastName; // Last name of the patient
+    String diagnosis; // The patients diagnosis
+    String generalPractitioner; // The patients general practitioner
 
     public Patient(String ssn, String firstName, String lastName, String diagnosis, String generalPractitioner) {
         this.ssn = ssn;
