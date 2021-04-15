@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class RegisterDialogController {
 
 
@@ -20,42 +22,47 @@ public class RegisterDialogController {
 
 
     private Stage registerStage;
-    private Patient registerPatient;
-    PatientRegister patientRegister = new PatientRegister("patientRegister");
+    PatientRegister patientRegister = new PatientRegister();
 
 
     @FXML
     private void initialize(){
+        doneRegisterBtn.setOnAction(actionEvent -> handleRegisterOk());
+        cancelRegisterBtn.setOnAction(actionEvent -> {
+            try {
+                switchToPrimary();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
+
+
+    @FXML
+    private void switchToPrimary() throws IOException {
+        App.setRoot("primary");
+    }
+
 
     public void setRegisterStage(Stage registerStage){
         this.registerStage = registerStage;
-        patientRegister.registerPatient(firstNameText.getText(), lastNameText.getText(), ssnText.getText(), gPText.getText());
+        patientRegister.registerPatient( ssnText.getText(),firstNameText.getText(), lastNameText.getText(), gPText.getText());
     }
 
     public void handleRegisterOk(){
-        if (validInput()){
-            patientRegister.registerPatient(firstNameText.getText(), lastNameText.getText(), ssnText.getText(), gPText.getText());
-            Alert okAlert = new Alert(Alert.AlertType.INFORMATION);
-            okAlert.setHeaderText("Success!");
-            okAlert.setContentText("Patient successfully registered");
-            okAlert.showAndWait();
-            registerStage.close();
+        if (validInput() && patientRegister.ssnValidator(ssnText.getText())){
+            try {
+                patientRegister.registerPatient(ssnText.getText(),firstNameText.getText(), lastNameText.getText(), gPText.getText());
+                Alert okAlert = new Alert(Alert.AlertType.INFORMATION);
+                okAlert.setHeaderText("Success!");
+                okAlert.setContentText("Patient successfully registered");
+                okAlert.showAndWait();
+            }catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
-
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     private boolean validInput(){
@@ -77,9 +84,9 @@ public class RegisterDialogController {
             alert.setHeaderText("Please fill all fields");
             alert.initOwner(registerStage);
             alert.setContentText(errorMessage);
+            alert.showAndWait();
             return false;
         }
-
     }
 
 
