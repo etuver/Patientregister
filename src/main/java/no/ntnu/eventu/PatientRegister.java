@@ -11,7 +11,7 @@ public class PatientRegister {
     private String registerName;
     private ArrayList<Patient> patients;
 
-    public PatientRegister(String registerName){
+    public PatientRegister(){
         this.registerName = registerName;
         this.patients = new ArrayList<>();
     }
@@ -26,7 +26,6 @@ public class PatientRegister {
      * @param ssn sosial security number
      * @param firstName first name
      * @param lastName last name
-
      * @param generalPractitioner name of general practitioner
      */
     public void registerPatient(String ssn, String firstName, String lastName, String generalPractitioner){
