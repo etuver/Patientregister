@@ -64,7 +64,7 @@ public class PrimaryController {
 
     @FXML
     private  void initialize(){
-        //fillWithTestData();
+        fillWithTestData();
 
         TableColumn<Patient, String> ssnCol = new TableColumn<>("Social Security Number");
         ssnCol.setCellValueFactory(new PropertyValueFactory<>("ssn"));
@@ -91,7 +91,7 @@ public class PrimaryController {
         patientsTable.getItems().addAll(patientRegister.getPatients());
 
 
-
+        removePatientBtn.setOnAction(actionEvent -> removePatient());
         exitMenu.setOnAction(actionEvent -> exitProgram());
         helpMenu.setOnAction(actionEvent -> helpDialog());
         loadBtn.setOnAction(actionEvent -> loadFile());
@@ -106,6 +106,33 @@ public class PrimaryController {
     }
 
 
+    /**
+     * Method to remove a patient from the register
+     * Show Alert confirmDialog
+     * If user press yes, patient will be removed from register
+     * If user presses no it will cancel
+     */
+    public void removePatient(){
+        int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
+        Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION,"Remove patient?" ,ButtonType.YES, ButtonType.NO);
+        removeAlert.setTitle("Remove patient");
+        removeAlert.setHeaderText("Are you sure you want to remove this patient from the register?\nThis can`t be undone!");
+        removeAlert.setContentText("Press yes to confirm, no to cancel");
+        removeAlert.showAndWait();
+        if (removeAlert.getResult() == ButtonType.YES){
+            patientsTable.getItems().remove(selectedIndex);
+        }
+    }
+
+
+
+
+
+
+    /**
+     * Switch to register new patient
+     * @throws IOException
+     */
     @FXML
     private void switchToRegister() throws IOException {
         App.setRoot("registerDialog");
@@ -135,6 +162,9 @@ public class PrimaryController {
     }
 
 
+    /**
+     * Shows the helpDialog
+     */
     private void helpDialog(){
         Alert helpDialog = new Alert(Alert.AlertType.INFORMATION);
         helpDialog.setTitle("About Patient register");
