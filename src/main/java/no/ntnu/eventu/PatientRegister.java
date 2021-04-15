@@ -67,6 +67,10 @@ public class PatientRegister {
         return success;
     }
 
+    public ArrayList<Patient>getPatients(){
+        return this.patients;
+    }
+
 
     /**
      * Method to remove a patient from the register
@@ -96,7 +100,7 @@ public class PatientRegister {
      * @return true if valid ssn with the given conditions, else return false
      */
     public boolean ssnValidator(String ssn){
-        String regex = "^([1-9]|1[0-9]|2[0-9]|30|31)(0[1-9]|1[0-2])(\\d\\d)(\\d{5})$";
+        String regex = "^(0[1-9]|1[0-9]|2[0-9]|30|31)(0[1-9]|1[0-2])(\\d\\d)(\\d{5})$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(ssn);
         return m.matches();
