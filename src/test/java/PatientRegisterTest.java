@@ -16,7 +16,7 @@ public class PatientRegisterTest {
    PatientRegister register = new PatientRegister("testregister");
         //Patient pat = new Patient("16019112345", "Donald", "Trump", "No need to explain", "Doctor Proctor");
         try {
-            register.registerPatient("16019112345", "Donald", "Trump", "No need to explain", "Doctor Proctor");
+            register.registerPatient("16019112345", "Donald", "Trump",  "Doctor Proctor");
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
@@ -33,7 +33,7 @@ public class PatientRegisterTest {
     public void registerPatientInvalidDateTest(){
         PatientRegister register = new PatientRegister("testRegister");
         try {
-            register.registerPatient("00019112345", "Donald", "Trump", "No need to explain", "Doctor Proctor");
+            register.registerPatient("00019112345", "Donald", "Trump",  "Doctor Proctor");
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
@@ -49,7 +49,7 @@ public class PatientRegisterTest {
     public void registerPatientInvalidCharacterTest(){
         PatientRegister register = new PatientRegister("testRegister");
         try {
-            register.registerPatient("x0019112345", "Donald", "Trump", "No need to explain", "Doctor Proctor");
+            register.registerPatient("x0019112345", "Donald", "Trump",  "Doctor Proctor");
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
@@ -64,7 +64,7 @@ public class PatientRegisterTest {
     public void registerPatientAnyFieldEmptyTest(){
         PatientRegister register = new PatientRegister("testRegister");
         try {
-            register.registerPatient("x0019112345", "Donald", "", "No need to explain", "Doctor Proctor");
+            register.registerPatient("x0019112345", "Donald", "", "Doctor Proctor");
         }catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
@@ -79,9 +79,9 @@ public class PatientRegisterTest {
     @Test
     public void registerExistingPatientTest(){
         PatientRegister register = new PatientRegister("testRegister");
-        register.registerPatient("24120012345", "Mikke", "Mus", "Tynn hale", "Doctor Proctor");
+        register.registerPatient("24120012345", "Mikke", "Mus",  "Doctor Proctor");
         try {
-            register.registerPatient("24120012345", "Donald", "Duck", "Stort nebb", "Doctor Proctor");
+            register.registerPatient("24120012345", "Donald", "Duck",  "Doctor Proctor");
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }

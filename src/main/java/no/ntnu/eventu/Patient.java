@@ -8,7 +8,7 @@ public class Patient {
     String diagnosis; // The patients diagnosis
     String generalPractitioner; // The patients general practitioner
 
-    public Patient(String ssn, String firstName, String lastName, String diagnosis, String generalPractitioner) {
+    public Patient(String ssn, String firstName, String lastName,  String generalPractitioner) {
         this.ssn = ssn;
         this.firstName = firstName;
         this.lastName = lastName;
