@@ -13,7 +13,7 @@ public class PatientRegisterTest {
      */
     @Test
     public void registerPatientTest(){
-   PatientRegister register = new PatientRegister("testregister");
+   PatientRegister register = new PatientRegister();
         //Patient pat = new Patient("16019112345", "Donald", "Trump", "No need to explain", "Doctor Proctor");
         try {
             register.registerPatient("16019112345", "Donald", "Trump",  "Doctor Proctor");
@@ -31,7 +31,7 @@ public class PatientRegisterTest {
      */
     @Test
     public void registerPatientInvalidDateTest(){
-        PatientRegister register = new PatientRegister("testRegister");
+        PatientRegister register = new PatientRegister();
         try {
             register.registerPatient("00019112345", "Donald", "Trump",  "Doctor Proctor");
         }catch (IllegalArgumentException e){
@@ -47,7 +47,7 @@ public class PatientRegisterTest {
      */
     @Test
     public void registerPatientInvalidCharacterTest(){
-        PatientRegister register = new PatientRegister("testRegister");
+        PatientRegister register = new PatientRegister();
         try {
             register.registerPatient("x0019112345", "Donald", "Trump",  "Doctor Proctor");
         }catch (IllegalArgumentException e){
@@ -62,7 +62,7 @@ public class PatientRegisterTest {
      */
     @Test
     public void registerPatientAnyFieldEmptyTest(){
-        PatientRegister register = new PatientRegister("testRegister");
+        PatientRegister register = new PatientRegister();
         try {
             register.registerPatient("x0019112345", "Donald", "", "Doctor Proctor");
         }catch (IllegalArgumentException e){
@@ -78,7 +78,7 @@ public class PatientRegisterTest {
      */
     @Test
     public void registerExistingPatientTest(){
-        PatientRegister register = new PatientRegister("testRegister");
+        PatientRegister register = new PatientRegister();
         register.registerPatient("24120012345", "Mikke", "Mus",  "Doctor Proctor");
         try {
             register.registerPatient("24120012345", "Donald", "Duck",  "Doctor Proctor");
