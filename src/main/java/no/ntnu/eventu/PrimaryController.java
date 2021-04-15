@@ -93,6 +93,7 @@ public class PrimaryController {
 
 
         exitMenu.setOnAction(actionEvent -> exitProgram());
+        helpMenu.setOnAction(actionEvent -> helpDialog());
 
 
 
@@ -116,7 +117,15 @@ public class PrimaryController {
     }
 
 
+    private void helpDialog(){
+        Alert helpDialog = new Alert(Alert.AlertType.INFORMATION);
+        helpDialog.setTitle("About Patient register");
+        helpDialog.setHeaderText("This is a information dialog");
+        helpDialog.setContentText("made by a great man");
+        helpDialog.showAndWait();
 
+
+    }
 
 
 
