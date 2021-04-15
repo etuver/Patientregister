@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.eventu.RegisterDialogController">
+   <children>
+      <GridPane layoutX="19.0" layoutY="89.0" prefHeight="163.0" prefWidth="568.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="41.0" prefWidth="228.0" text="First Name" GridPane.rowIndex="1" />
+            <Label prefHeight="41.0" prefWidth="228.0" text="Last Name" GridPane.rowIndex="2" />
+            <Label prefHeight="41.0" prefWidth="228.0" text="Social Security Number" GridPane.rowIndex="3" />
+            <Label prefHeight="41.0" prefWidth="228.0" text="Name of General Practitioner" GridPane.rowIndex="4" />
+            <TextField fx:id="firstNameText" prefHeight="41.0" prefWidth="294.0" promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField prefHeight="41.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="lastNameText" prefHeight="41.0" prefWidth="294.0" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="ssnText" prefHeight="41.0" prefWidth="294.0" promptText="Social Security Number" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="gPText" prefHeight="41.0" prefWidth="294.0" promptText="General Practitioner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Button fx:id="doneRegisterBtn" layoutX="170.0" layoutY="331.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="105.0" text="Done" />
+      <Button fx:id="cancelRegisterBtn" layoutX="327.0" layoutY="331.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="105.0" text="Cancel" />
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="398.0" text="Register new patient" />
+      <ImageView fx:id="registerImageView" fitHeight="71.0" fitWidth="121.0" layoutX="412.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
