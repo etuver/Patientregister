@@ -141,6 +141,7 @@ public class PrimaryController {
 
     //For now just a method to fill table
     private void loadFile(){
+        patientsTable.getItems().clear();
         patientsTable.getItems().addAll(patientRegister.getPatients());
     }
 
