@@ -55,8 +55,8 @@ public class PrimaryController {
      * Just some test data before implementing filehandling
      */
     public void fillWithTestData(){
-        patientRegister.registerPatient("16019112345", "Donald", "Trump", "Nobody knows", "A poor guy");
-        patientRegister.registerPatient("02019112345", "Mikke", "Mus", "Short tail", "Petter Smart");
+        patientRegister.registerPatient("16019112345", "Donald", "Trump",  "A poor guy");
+        patientRegister.registerPatient("02019112345", "Mikke", "Mus", "Petter Smart");
     }
 
 
