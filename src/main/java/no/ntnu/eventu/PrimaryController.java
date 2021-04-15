@@ -48,7 +48,7 @@ public class PrimaryController {
 
 
     //Create a new PatientRegister
-    PatientRegister patientRegister = new PatientRegister("patientRegister");
+    PatientRegister patientRegister = new PatientRegister();
 
 
     /**
@@ -64,7 +64,7 @@ public class PrimaryController {
 
     @FXML
     private  void initialize(){
-        fillWithTestData();
+        //fillWithTestData();
 
         TableColumn<Patient, String> ssnCol = new TableColumn<>("Social Security Number");
         ssnCol.setCellValueFactory(new PropertyValueFactory<>("ssn"));
@@ -94,11 +94,29 @@ public class PrimaryController {
 
         exitMenu.setOnAction(actionEvent -> exitProgram());
         helpMenu.setOnAction(actionEvent -> helpDialog());
-
-
-
+        loadBtn.setOnAction(actionEvent -> loadFile());
+        addPatientBtn.setOnAction(actionEvent -> {
+            try {
+                switchToRegister();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
+
+
+    @FXML
+    private void switchToRegister() throws IOException {
+        App.setRoot("registerDialog");
+    }
+
+
+    //For now just a method to fill table
+    private void loadFile(){
+        patientsTable.getItems().addAll(patientRegister.getPatients());
+    }
+
 
 
     /**
@@ -123,8 +141,6 @@ public class PrimaryController {
         helpDialog.setHeaderText("This is a information dialog");
         helpDialog.setContentText("made by a great man");
         helpDialog.showAndWait();
-
-
     }
 
 
