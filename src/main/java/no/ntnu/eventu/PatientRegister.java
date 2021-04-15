@@ -8,11 +8,10 @@ import java.util.regex.Pattern;
 
 public class PatientRegister {
 
-    private String registerName;
+
     private ArrayList<Patient> patients;
 
     public PatientRegister(){
-        this.registerName = registerName;
         this.patients = new ArrayList<>();
     }
 
