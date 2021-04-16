@@ -55,7 +55,7 @@ public class PrimaryController {
      * Just some test data before implementing filehandling
      */
     public void fillWithTestData(){
-        patientRegister.registerPatient("Donald", "Trump",  "16019112345", "A poor guy");
+        patientRegister.registerPatient("Donald", "Trump",  "16019295843", "A poor guy");
         patientRegister.registerPatient( "Mikke", "Mus", "02019112345","Petter Smart");
     }
 
@@ -66,26 +66,31 @@ public class PrimaryController {
     private  void initialize(){
         fillWithTestData();
 
-        TableColumn<Patient, String> ssnCol = new TableColumn<>("Social Security Number");
-        ssnCol.setCellValueFactory(new PropertyValueFactory<>("ssn"));
-        patientsTable.getColumns().add(ssnCol);
 
         TableColumn<Patient, String> firstNameCol = new TableColumn<>("First name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         patientsTable.getColumns().add(firstNameCol);
+
 
         TableColumn<Patient, String> lastNameCol = new TableColumn<>("Last name");
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         patientsTable.getColumns().add(lastNameCol);
 
 
-        TableColumn<Patient, String> diagnosisCol = new TableColumn<>("Diagnosis");
-        diagnosisCol.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
-        patientsTable.getColumns().add(diagnosisCol);
+        TableColumn<Patient, String> ssnCol = new TableColumn<>("Social Security Number");
+        ssnCol.setCellValueFactory(new PropertyValueFactory<>("ssn"));
+        patientsTable.getColumns().add(ssnCol);
+
 
         TableColumn<Patient, String> gPCol = new TableColumn<>("General Practitioner");
         gPCol.setCellValueFactory(new PropertyValueFactory<>("generalPractitioner"));
         patientsTable.getColumns().add(gPCol);
+
+
+        TableColumn<Patient, String> diagnosisCol = new TableColumn<>("Diagnosis");
+        diagnosisCol.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
+        patientsTable.getColumns().add(diagnosisCol);
+
 
         //fills table
         patientsTable.getItems().addAll(patientRegister.getPatients());
