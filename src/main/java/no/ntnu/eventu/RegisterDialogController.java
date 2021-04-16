@@ -23,6 +23,7 @@ public class RegisterDialogController {
 
     private Stage registerStage;
     PatientRegister patientRegister = new PatientRegister();
+    PrimaryController primaryController;
 
 
     @FXML
@@ -39,10 +40,6 @@ public class RegisterDialogController {
     }
 
 
-    @FXML
-    private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
-    }
 
 
     public void setRegisterStage(Stage registerStage){
@@ -53,15 +50,27 @@ public class RegisterDialogController {
     public void handleRegisterOk(){
         if (validInput() && patientRegister.ssnValidator(ssnText.getText())){
             try {
-                patientRegister.registerPatient(ssnText.getText(),firstNameText.getText(), lastNameText.getText(), gPText.getText());
+                patientRegister.registerPatient(firstNameText.getText(), lastNameText.getText(),ssnText.getText(), gPText.getText());
+                //primaryController.patientRegister.registerPatient(firstNameText.getText(), lastNameText.getText(),ssnText.getText(), gPText.getText());
                 Alert okAlert = new Alert(Alert.AlertType.INFORMATION);
                 okAlert.setHeaderText("Success!");
                 okAlert.setContentText("Patient successfully registered");
                 okAlert.showAndWait();
-            }catch (IllegalArgumentException e) {
+                switchToPrimary();
+            }catch (IllegalArgumentException | IOException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+
+    /**
+     * Switch to primarycontroller
+     * @throws IOException
+     */
+    @FXML
+    private void switchToPrimary() throws IOException {
+        App.setRoot("primary");
     }
 
 

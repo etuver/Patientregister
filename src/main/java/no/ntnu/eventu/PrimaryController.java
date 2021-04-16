@@ -48,15 +48,15 @@ public class PrimaryController {
 
 
     //Create a new PatientRegister
-    PatientRegister patientRegister = new PatientRegister();
+   public PatientRegister patientRegister = new PatientRegister();
 
 
     /**
      * Just some test data before implementing filehandling
      */
     public void fillWithTestData(){
-        patientRegister.registerPatient("16019112345", "Donald", "Trump",  "A poor guy");
-        patientRegister.registerPatient("02019112345", "Mikke", "Mus", "Petter Smart");
+        patientRegister.registerPatient("Donald", "Trump",  "16019112345", "A poor guy");
+        patientRegister.registerPatient( "Mikke", "Mus", "02019112345","Petter Smart");
     }
 
 
