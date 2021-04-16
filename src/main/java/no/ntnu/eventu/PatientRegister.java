@@ -117,6 +117,12 @@ public class PatientRegister {
 
 
 
+    private static final PatientRegister instance = new PatientRegister();
+
+    public static PatientRegister getInstance(){
+        return instance;
+    }
+
 
 
 

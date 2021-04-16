@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 public class PrimaryController {
 
@@ -47,9 +48,10 @@ public class PrimaryController {
 
 
 
-    //Create a new PatientRegister
-   public PatientRegister patientRegister = new PatientRegister();
 
+
+    //Create a new PatientRegister
+    private PatientRegister patientRegister = PatientRegister.getInstance();
 
     /**
      * Just some test data before implementing filehandling
@@ -64,7 +66,6 @@ public class PrimaryController {
 
     @FXML
     private  void initialize(){
-        fillWithTestData();
 
 
         TableColumn<Patient, String> firstNameCol = new TableColumn<>("First name");
@@ -97,6 +98,7 @@ public class PrimaryController {
 
 
         removePatientBtn.setOnAction(actionEvent -> removePatient());
+
         exitMenu.setOnAction(actionEvent -> exitProgram());
         helpMenu.setOnAction(actionEvent -> helpDialog());
         loadBtn.setOnAction(actionEvent -> loadFile());
@@ -178,8 +180,5 @@ public class PrimaryController {
         helpDialog.setContentText("made by a great man");
         helpDialog.showAndWait();
     }
-
-
-
 
 }

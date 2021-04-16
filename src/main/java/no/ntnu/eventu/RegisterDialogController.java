@@ -22,8 +22,8 @@ public class RegisterDialogController {
 
 
     private Stage registerStage;
-    PatientRegister patientRegister = new PatientRegister();
     PrimaryController primaryController;
+    private PatientRegister patientRegister = PatientRegister.getInstance();
 
 
     @FXML
@@ -36,7 +36,6 @@ public class RegisterDialogController {
                 e.printStackTrace();
             }
         });
-
     }
 
 
