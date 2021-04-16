@@ -27,7 +27,7 @@ public class PatientRegister {
      * @param lastName last name
      * @param generalPractitioner name of general practitioner
      */
-    public void registerPatient(String ssn, String firstName, String lastName, String generalPractitioner){
+    public void registerPatient( String firstName, String lastName,String ssn, String generalPractitioner){
         if (ssn.equals("") || firstName.equals("") || lastName.equals("")){
             throw new IllegalArgumentException("ssn, first name or last name can`t be null");
         }
@@ -37,11 +37,12 @@ public class PatientRegister {
                 //System.out.println("A patient with chosen ssn already exists");
             }
         }
-        Patient newPatient = new Patient(ssn, firstName, lastName,generalPractitioner);
+
         if (!ssnValidator(ssn)){
             throw new IllegalArgumentException("Invalid ssn. A ssn has the format ddmmyynnnnn");
             //System.out.println("Invalid ssn. A ssn has the format ddmmyynnnnn");
         }else  {
+            Patient newPatient = new Patient( firstName, lastName,ssn, generalPractitioner);
             patients.add(newPatient);
         }
     }
