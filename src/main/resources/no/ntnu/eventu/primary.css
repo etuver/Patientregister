@@ -40,4 +40,9 @@ Created 14.04.2021
     -fx-background-size: 30px;
     -fx-background-repeat: stretch;
     -fx-background-position: center;
+
+}
+
+.toolbar {
+    -fx-background-color: linear-gradient(#98a8bd 0%, #8195af 25%, #6d86a4 100%);
 }
