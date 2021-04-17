@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.eventu.RegisterDialogController">
    <children>
       <GridPane layoutX="19.0" layoutY="89.0" prefHeight="163.0" prefWidth="568.0">
@@ -28,7 +27,6 @@
             <Label prefHeight="41.0" prefWidth="228.0" text="Social Security Number" GridPane.rowIndex="3" />
             <Label prefHeight="41.0" prefWidth="228.0" text="Name of General Practitioner" GridPane.rowIndex="4" />
             <TextField fx:id="firstNameText" prefHeight="41.0" prefWidth="294.0" promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField prefHeight="41.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="lastNameText" prefHeight="41.0" prefWidth="294.0" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="ssnText" prefHeight="41.0" prefWidth="294.0" promptText="Social Security Number" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="gPText" prefHeight="41.0" prefWidth="294.0" promptText="General Practitioner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
