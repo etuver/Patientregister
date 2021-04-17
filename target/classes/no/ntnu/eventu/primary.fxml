@@ -35,9 +35,9 @@
           </Menu>
         </menus>
       </MenuBar>
-       <Pane maxHeight="250" minHeight="100" prefWidth="977.0">
+       <Pane id="topBar" maxHeight="250" minHeight="100" prefWidth="977.0" styleClass="toolbar">
           <children>
-              <Button fx:id="addPatientBtn" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0"  styleClass="addPatientBtn" text="" />
+              <Button fx:id="addPatientBtn" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="addPatientBtn" text="" />
               <Button fx:id="editPatientBtn" layoutX="147.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="editPatientBtn" text="" />
               <Button fx:id="removePatientBtn" layoutX="264.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="removePatientBtn" text="" />
               <Button fx:id="loadBtn" layoutX="384.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="loadBtn" text="" />
@@ -46,7 +46,7 @@
        </Pane>
       <TableView fx:id="patientsTable" prefHeight="673.0" prefWidth="1150.0">
           <placeholder>
-              <Label text="You haven no patients" />
+              <Label text="You haven no patients. Please load a file"  />
           </placeholder>
         <columns>
             <!-- <TableColumn prefWidth="222.0" text="First name" />
