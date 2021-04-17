@@ -1,14 +1,22 @@
 package no.ntnu.eventu;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+
+
+import javafx.application.HostServices;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
 public class PrimaryController {
@@ -101,7 +109,7 @@ public class PrimaryController {
 
         exitMenu.setOnAction(actionEvent -> exitProgram());
         helpMenu.setOnAction(actionEvent -> helpDialog());
-        loadBtn.setOnAction(actionEvent -> loadFile());
+        //loadBtn.setOnAction(actionEvent -> loadFile());
         addPatientBtn.setOnAction(actionEvent -> {
             try {
                 switchToRegister();
@@ -147,10 +155,41 @@ public class PrimaryController {
 
 
     //For now just a method to fill table
-    private void loadFile(){
-        patientsTable.getItems().clear();
-        patientsTable.getItems().addAll(patientRegister.getPatients());
+    private void helpDialog(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "loadAlert");
+        alert.setHeaderText("loaderalert");
+        FlowPane fp = new FlowPane();
+        Label label = new Label("Application created by " +
+                "\n(C)Even Tuverud\n" +
+                "2021-04-20\n" +
+                "\n" +
+                "Check out my GitLab for more:\n" +
+                "Click link to copy to clipboard");
+        Hyperlink hyperlink = new Hyperlink("https://gitlab.stud.idi.ntnu.no/eventu/patientregister");
+
+        hyperlink.setOnAction(event -> {
+                    final Clipboard clipboard = Clipboard.getSystemClipboard();
+                    final ClipboardContent content = new ClipboardContent();
+                    content.putString(hyperlink.getText());
+                    clipboard.setContent(content);
+                }
+                );
+
+
+
+        fp.getChildren().addAll(label,hyperlink);
+        alert.getDialogPane().contentProperty().set(fp);
+        alert.setTitle("About Patient Register");
+        alert.setHeaderText("Patient Register \nv0.1-SNAPSHOT");
+        ImageView imageView = new ImageView(this.getClass().getResource("images/info.png").toString());
+        imageView.setFitWidth(40);
+        imageView.setFitHeight(40);
+        alert.setGraphic(imageView);
+        alert.showAndWait();
+
+
     }
+
 
 
 
@@ -173,11 +212,13 @@ public class PrimaryController {
     /**
      * Shows the helpDialog
      */
-    private void helpDialog(){
+    private void OLDhelpDialog(){
         Alert helpDialog = new Alert(Alert.AlertType.INFORMATION);
+        Hyperlink gitlab = new Hyperlink("https://gitlab.stud.idi.ntnu.no/eventu/patientregister");
+        gitlab.setOnAction(event -> gitlab.requestFocus());
         helpDialog.setTitle("About Patient register");
         helpDialog.setHeaderText("This is a information dialog");
-        helpDialog.setContentText("made by a great man");
+        helpDialog.setContentText("made by a great man\nVersion 0.0.1" +"\nCheck out on GitLab:\n" + gitlab);
         helpDialog.showAndWait();
     }
 
