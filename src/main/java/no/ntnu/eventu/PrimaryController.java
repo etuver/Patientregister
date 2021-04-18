@@ -3,8 +3,10 @@ package no.ntnu.eventu;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+import java.util.Objects;
 
 
 import javafx.application.HostServices;
@@ -18,6 +20,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class PrimaryController {
 
@@ -30,6 +33,9 @@ public class PrimaryController {
     public MenuItem editMenu;
     public MenuItem removeMenu;
     public Menu helpMenu;
+    public Pane statusbar;
+    public Label statusLabel;
+    public ImageView statusBarIcon;
 
 
     //Buttons
@@ -60,6 +66,9 @@ public class PrimaryController {
 
     //Create a new PatientRegister
     private PatientRegister patientRegister = PatientRegister.getInstance();
+
+
+
 
     /**
      * Just some test data before implementing filehandling
@@ -102,14 +111,15 @@ public class PrimaryController {
 
 
         //fills table
-        patientsTable.getItems().addAll(patientRegister.getPatients());
+        refreshTable();
+        //patientsTable.getItems().addAll(patientRegister.getPatients());
 
 
         removePatientBtn.setOnAction(actionEvent -> removePatient());
 
         exitMenu.setOnAction(actionEvent -> exitProgram());
         helpMenu.setOnAction(actionEvent -> helpDialog());
-        //loadBtn.setOnAction(actionEvent -> loadFile());
+        loadBtn.setOnAction(actionEvent -> loadFile());
         addPatientBtn.setOnAction(actionEvent -> {
             try {
                 switchToRegister();
@@ -118,6 +128,28 @@ public class PrimaryController {
             }
         });
 
+    }
+
+    private void refreshTable(){
+        patientsTable.getItems().clear();
+        patientsTable.getItems().addAll(patientRegister.getPatients());
+    }
+
+
+
+
+
+
+    private void loadFile(){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = "";
+        currentTime = now.format(formatter);
+
+
+
+        statusLabel.setText("Status: File successfully loaded on " + currentTime + "           Do not forget to save your changes!");
+        statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
     }
 
 
@@ -129,14 +161,33 @@ public class PrimaryController {
      */
     public void removePatient(){
         int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
-        Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION,"Remove patient?" ,ButtonType.YES, ButtonType.NO);
-        removeAlert.setTitle("Remove patient");
-        removeAlert.setHeaderText("Are you sure you want to remove this patient from the register?\nThis can`t be undone!");
-        removeAlert.setContentText("Press yes to confirm, no to cancel");
-        removeAlert.showAndWait();
-        if (removeAlert.getResult() == ButtonType.YES){
-            patientsTable.getItems().remove(selectedIndex);
+        if (selectedIndex < 0 ){
+            Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR,"No patient selected", ButtonType.OK);
+            removeErrorAlert.setTitle("Error");
+            removeErrorAlert.setHeaderText("No patient selected");
+            removeErrorAlert.setContentText("Mark a patient in the table before pressing remove");
+            removeErrorAlert.showAndWait();
+        }else {
+            Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION,"Remove patient?" ,ButtonType.YES, ButtonType.NO);
+            removeAlert.setTitle("Remove patient");
+            removeAlert.setHeaderText("Are you sure you want to remove this patient from the register?\nThis can`t be undone!");
+            removeAlert.setContentText("Press yes to confirm, no to cancel");
+            removeAlert.showAndWait();
+            if (removeAlert.getResult() == ButtonType.YES){
+                TablePosition pos =    patientsTable.getSelectionModel().getSelectedCells().get(0);
+                int row = pos.getRow();
+                Patient item = patientsTable.getItems().get(row);
+                TableColumn col = pos.getTableColumn();
+                String deleteSsn = (String) col.getCellObservableValue(item).getValue();
+                patientRegister.removePatient(deleteSsn);
+
+
+                //patientsTable.getItems().remove(selectedIndex);
+            }
         }
+        refreshTable();
+
+
     }
 
 
