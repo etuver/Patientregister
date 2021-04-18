@@ -54,6 +54,10 @@ public class RegisterDialogController {
                 Alert okAlert = new Alert(Alert.AlertType.INFORMATION);
                 okAlert.setHeaderText("Success!");
                 okAlert.setContentText("Patient successfully registered");
+                ImageView imageView = new ImageView(this.getClass().getResource("images/success.png").toString());
+                imageView.setFitWidth(40);
+                imageView.setFitHeight(40);
+                okAlert.setGraphic(imageView);
                 okAlert.showAndWait();
                 switchToPrimary();
             }catch (IllegalArgumentException | IOException e) {
