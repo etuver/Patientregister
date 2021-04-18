@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.eventu.RegisterDialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.eventu.RegisterDialogController" stylesheets="@registerDialog.css">
    <children>
       <GridPane layoutX="19.0" layoutY="89.0" prefHeight="163.0" prefWidth="568.0">
         <columnConstraints>
@@ -32,8 +32,8 @@
             <TextField fx:id="gPText" prefHeight="41.0" prefWidth="294.0" promptText="General Practitioner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <Button fx:id="doneRegisterBtn" layoutX="170.0" layoutY="331.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="105.0" text="Done" />
-      <Button fx:id="cancelRegisterBtn" layoutX="327.0" layoutY="331.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="105.0" text="Cancel" />
+      <Button fx:id="doneRegisterBtn" layoutX="170.0" layoutY="331.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="105.0" text="Done" styleClass="button" />
+      <Button fx:id="cancelRegisterBtn" layoutX="327.0" layoutY="331.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="105.0" text="Cancel" styleClass="button" />
       <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="398.0" text="Register new patient" />
       <ImageView fx:id="registerImageView" fitHeight="71.0" fitWidth="121.0" layoutX="412.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
    </children>
