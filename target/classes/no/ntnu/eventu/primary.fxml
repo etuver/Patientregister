@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -44,9 +45,9 @@
               <Button fx:id="saveBtn" layoutX="502.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="saveBtn" text="" />
           </children>
        </Pane>
-      <TableView fx:id="patientsTable" prefHeight="673.0" prefWidth="1150.0">
+      <TableView fx:id="patientsTable" prefHeight="1000.0" prefWidth="1150.0">
           <placeholder>
-              <Label text="You haven no patients. Please load a file"  />
+              <Label text="You haven no patients. Please load a file" />
           </placeholder>
         <columns>
             <!-- <TableColumn prefWidth="222.0" text="First name" />
@@ -57,6 +58,10 @@
             -->
         </columns>
       </TableView>
-      <Pane maxHeight="20" minHeight="20" prefHeight="209.0" prefWidth="1150.0" />
+      <Pane fx:id="statusbar" maxHeight="20" minHeight="20" prefHeight="20.0" prefWidth="1150.0" styleClass="statusbar">
+         <children>
+            <Label fx:id="statusLabel" layoutX="29.0" prefHeight="20.0" prefWidth="540.0" text="" />
+            <ImageView fx:id="statusBarIcon" fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
    </children>
 </VBox>
