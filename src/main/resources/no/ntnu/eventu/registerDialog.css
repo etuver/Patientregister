@@ -1,0 +1,15 @@
+/**
+Stylesheet for registerDialogController
+Created 18.04.2021
+ */
+
+
+
+
+.button{
+}
+
+.button:hover {
+    -fx-background-color: #afd5ed;
+    -fx-cursor: hand;
+}
