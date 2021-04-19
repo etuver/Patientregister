@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -26,7 +27,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Patient register");
+        stage.setTitle("Patient Register");
+        stage.getIcons().add(new Image(this.getClass().getResource("images/hospital.png").toString()));
 
     }
 
