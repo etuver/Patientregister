@@ -57,5 +57,9 @@ public class Patient {
         this.generalPractitioner = generalPractitioner;
     }
 
+    public String toString(){
+        return firstName +";"+lastName+";"+ssn+";"+generalPractitioner+";"+diagnosis;
+    }
+
 
 }
