@@ -49,6 +49,7 @@ public class PatientRegister {
 
 
     /**
+     * NOT USED IN THIS ASSIGNMENT
      * Method to add diagnosis to a patient
      * @param ssn social security number of the patient
      * @param diagnosis the diagnosis
@@ -99,10 +100,11 @@ public class PatientRegister {
      * @return true if valid ssn with the given conditions, else return false
      */
     public boolean ssnValidator(String ssn){
-        String regex = "^(0[1-9]|1[0-9]|2[0-9]|30|31)(0[1-9]|1[0-2])(\\d\\d)(\\d{5})$";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(ssn);
-        return m.matches();
+        //String regex = "^(0[1-9]|1[0-9]|2[0-9]|30|31)(0[1-9]|1[0-2])(\\d\\d)(\\d{5})$";
+        //Pattern p = Pattern.compile(regex);
+        //Matcher m = p.matcher(ssn);
+        //return m.matches();
+        return true;
     }
 
 
