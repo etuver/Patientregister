@@ -1,17 +1,13 @@
 package no.ntnu.eventu;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Objects;
 
-
-import javafx.application.HostServices;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -19,8 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+
 
 public class PrimaryController {
 
@@ -33,6 +29,9 @@ public class PrimaryController {
     public MenuItem editMenu;
     public MenuItem removeMenu;
     public Menu helpMenu;
+
+
+    // Statusbar at the bottom
     public Pane statusbar;
     public Label statusLabel;
     public ImageView statusBarIcon;
@@ -53,38 +52,31 @@ public class PrimaryController {
     //Table
     @FXML
     private TableView<Patient> patientsTable;
-    @FXML
-    private TableColumn<Patient, String> ssn, firstName, lastName, diagnosis, generalPractitioner;
-
-
-
-
-
-
-
+    //@FXML
+    //private TableColumn<Patient, String> ssn, firstName, lastName, diagnosis, generalPractitioner;
 
 
     //Create a new PatientRegister
-    private PatientRegister patientRegister = PatientRegister.getInstance();
+    PatientRegister patientRegister = PatientRegister.getInstance();
 
-
+    //Initialise filemanager
+    FileManager fileManager = new FileManager();
 
 
     /**
-     * Just some test data before implementing filehandling
+     * Just some test data
      */
-    public void fillWithTestData(){
-        patientRegister.registerPatient("Donald", "Trump",  "16019295843", "A poor guy");
-        patientRegister.registerPatient( "Mikke", "Mus", "02019112345","Petter Smart");
+    public void fillWithTestData() {
+        patientRegister.registerPatient("Donald", "Trump", "16019295843", "A poor guy");
+        patientRegister.registerPatient("Mikke", "Mus", "02019112345", "Petter Smart");
     }
 
 
-
-
     @FXML
-    private  void initialize(){
+    private void initialize() {
 
 
+        // Filles table with columns
         TableColumn<Patient, String> firstNameCol = new TableColumn<>("First name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         patientsTable.getColumns().add(firstNameCol);
@@ -104,22 +96,32 @@ public class PrimaryController {
         gPCol.setCellValueFactory(new PropertyValueFactory<>("generalPractitioner"));
         patientsTable.getColumns().add(gPCol);
 
-
         TableColumn<Patient, String> diagnosisCol = new TableColumn<>("Diagnosis");
         diagnosisCol.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
         patientsTable.getColumns().add(diagnosisCol);
 
 
-        //fills table
+        // Refresh table every time it is loaded
         refreshTable();
-        //patientsTable.getItems().addAll(patientRegister.getPatients());
 
 
+        // Actionevents on buttons
+        // Buttons named Menu are menuItems
         removePatientBtn.setOnAction(actionEvent -> removePatient());
-
+        removeMenu.setOnAction(actionEvent -> removePatient());
+        saveBtn.setOnAction(actionEvent -> saveFile());
+        exportMenu.setOnAction(actionEvent -> saveFile());
         exitMenu.setOnAction(actionEvent -> exitProgram());
         helpMenu.setOnAction(actionEvent -> helpDialog());
         loadBtn.setOnAction(actionEvent -> loadFile());
+        importMenu.setOnAction(actionEvent -> loadFile());
+        addMenu.setOnAction(actionEvent -> {
+            try {
+                switchToRegister();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         addPatientBtn.setOnAction(actionEvent -> {
             try {
                 switchToRegister();
@@ -130,51 +132,84 @@ public class PrimaryController {
 
     }
 
-    private void refreshTable(){
+
+    /**
+     * Method to refresh patientsTable
+     * Removes all data from the table and adds all data from patientsRegister
+     */
+    private void refreshTable() {
         patientsTable.getItems().clear();
         patientsTable.getItems().addAll(patientRegister.getPatients());
     }
 
 
-
-
-
-
-    private void loadFile(){
+    /**
+     * Method to save data to selected file
+     * If successfully loading, updates statusbar with sucessfull message,
+     * if unsuccessful, update statusbar with errormessage.
+     */
+    private void saveFile() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String currentTime = "";
-        currentTime = now.format(formatter);
+        String currentTime = now.format(formatter);
+        try {
+            fileManager.saveFile(patientRegister);
+            statusLabel.setText("Status: File successfully saved on " + currentTime + "!");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
+        } catch (FileNotFoundException | NullPointerException fileNotFoundException) {
+            statusLabel.setText("Could not save file. Please try again");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
+        }
+    }
 
 
-
-        statusLabel.setText("Status: File successfully loaded on " + currentTime + "           Do not forget to save your changes!");
-        statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
+    /**
+     * Method to load data from a file
+     * If successfully loading, updates statusbar with sucessfull message,
+     * if unsuccessful, update statusbar with errormessage.
+     */
+    private void loadFile() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = now.format(formatter);
+        //currentTime = now.format(formatter);
+        try {
+            fileManager.openFile(patientRegister);
+            statusLabel.setText("Status: File successfully loaded on " + currentTime + "           Do not forget to save your changes!");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
+        } catch (FileNotFoundException | NullPointerException f) {
+            statusLabel.setText("Could not load file. File not found or illegal filetype");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
+        } catch (IllegalArgumentException e){
+            statusLabel.setText(e.getMessage());
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
+        }
+        refreshTable();
     }
 
 
     /**
      * Method to remove a patient from the register
-     * Show Alert confirmDialog
+     * Opens a confirmdialog
      * If user press yes, patient will be removed from register
      * If user presses no it will cancel
      */
-    public void removePatient(){
+    public void removePatient() {
         int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex < 0 ){
-            Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR,"No patient selected", ButtonType.OK);
+        if (selectedIndex < 0) {
+            Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);
             removeErrorAlert.setTitle("Error");
             removeErrorAlert.setHeaderText("No patient selected");
             removeErrorAlert.setContentText("Mark a patient in the table before pressing remove");
             removeErrorAlert.showAndWait();
-        }else {
-            Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION,"Remove patient?" ,ButtonType.YES, ButtonType.NO);
+        } else {
+            Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove patient?", ButtonType.YES, ButtonType.NO);
             removeAlert.setTitle("Remove patient");
             removeAlert.setHeaderText("Are you sure you want to remove this patient from the register?\nThis can`t be undone!");
             removeAlert.setContentText("Press yes to confirm, no to cancel");
             removeAlert.showAndWait();
-            if (removeAlert.getResult() == ButtonType.YES){
-                TablePosition pos =    patientsTable.getSelectionModel().getSelectedCells().get(0);
+            if (removeAlert.getResult() == ButtonType.YES) {
+                TablePosition pos = patientsTable.getSelectionModel().getSelectedCells().get(0);
                 int row = pos.getRow();
                 Patient item = patientsTable.getItems().get(row);
                 TableColumn col = pos.getTableColumn();
@@ -191,12 +226,9 @@ public class PrimaryController {
     }
 
 
-
-
-
-
     /**
      * Switch to register new patient
+     *
      * @throws IOException
      */
     @FXML
@@ -205,8 +237,12 @@ public class PrimaryController {
     }
 
 
-    //For now just a method to fill table
-    private void helpDialog(){
+    /**
+     * Opens a dialog when menuitem help is pressed
+     * Contains information about the app and link to GitLAb rep
+     * GitLab repo closed until due date for the assignment
+     */
+    private void helpDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "loadAlert");
         alert.setHeaderText("loaderalert");
         FlowPane fp = new FlowPane();
@@ -224,11 +260,8 @@ public class PrimaryController {
                     content.putString(hyperlink.getText());
                     clipboard.setContent(content);
                 }
-                );
-
-
-
-        fp.getChildren().addAll(label,hyperlink);
+        );
+        fp.getChildren().addAll(label, hyperlink);
         alert.getDialogPane().contentProperty().set(fp);
         alert.setTitle("About Patient Register");
         alert.setHeaderText("Patient Register \nv0.1-SNAPSHOT");
@@ -237,40 +270,23 @@ public class PrimaryController {
         imageView.setFitHeight(40);
         alert.setGraphic(imageView);
         alert.showAndWait();
-
-
     }
-
-
 
 
     /**
      * Method to exit program
      * imports class Alert to create a confirmation box before exiting
      */
-    private void exitProgram(){
+    private void exitProgram() {
         Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit? \nAll unsaved progress will be lost!", ButtonType.YES, ButtonType.NO);
         exitAlert.setTitle("Confirm exit");
         exitAlert.setHeaderText("Exit application?");
         exitAlert.setAlertType(Alert.AlertType.WARNING);
         exitAlert.showAndWait();
-        if (exitAlert.getResult() == ButtonType.YES){
+        if (exitAlert.getResult() == ButtonType.YES) {
             System.exit(0);
         }
     }
 
-
-    /**
-     * Shows the helpDialog
-     */
-    private void OLDhelpDialog(){
-        Alert helpDialog = new Alert(Alert.AlertType.INFORMATION);
-        Hyperlink gitlab = new Hyperlink("https://gitlab.stud.idi.ntnu.no/eventu/patientregister");
-        gitlab.setOnAction(event -> gitlab.requestFocus());
-        helpDialog.setTitle("About Patient register");
-        helpDialog.setHeaderText("This is a information dialog");
-        helpDialog.setContentText("made by a great man\nVersion 0.0.1" +"\nCheck out on GitLab:\n" + gitlab);
-        helpDialog.showAndWait();
-    }
 
 }
