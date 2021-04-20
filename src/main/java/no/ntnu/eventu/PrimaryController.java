@@ -149,6 +149,13 @@ public class PrimaryController {
      * if unsuccessful, update statusbar with errormessage.
      */
     private void saveFile() {
+        if (patientRegister.getRegisterSize() == 0){
+            Alert saveEmptyRegisterAlert = new Alert(Alert.AlertType.ERROR,"Do not save empty register");
+            saveEmptyRegisterAlert.setTitle("Error");
+            saveEmptyRegisterAlert .setHeaderText("Nothing to save");
+            saveEmptyRegisterAlert.setContentText("You have no patients to save");
+            saveEmptyRegisterAlert.showAndWait();
+        }else {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = now.format(formatter);
@@ -159,6 +166,7 @@ public class PrimaryController {
         } catch (FileNotFoundException | NullPointerException fileNotFoundException) {
             statusLabel.setText("Could not save file. Please try again");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
+        }
         }
     }
 
@@ -243,17 +251,17 @@ public class PrimaryController {
      * GitLab repo closed until due date for the assignment
      */
     private void helpDialog() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "loadAlert");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,  "loadAlert");
         alert.setHeaderText("loaderalert");
         FlowPane fp = new FlowPane();
         Label label = new Label("Application created by " +
                 "\n(C)Even Tuverud\n" +
                 "2021-04-20\n" +
                 "\n" +
-                "Check out my GitLab for more:\n" +
-                "Click link to copy to clipboard");
-        Hyperlink hyperlink = new Hyperlink("https://gitlab.stud.idi.ntnu.no/eventu/patientregister");
+                "Check out my GitLab for more:\n");
 
+        Hyperlink hyperlink = new Hyperlink("https://gitlab.stud.idi.ntnu.no/eventu/patientregister");
+        Label bottomLabel = new Label("(Click link to copy to clipboard)");
         hyperlink.setOnAction(event -> {
                     final Clipboard clipboard = Clipboard.getSystemClipboard();
                     final ClipboardContent content = new ClipboardContent();
@@ -261,9 +269,9 @@ public class PrimaryController {
                     clipboard.setContent(content);
                 }
         );
-        fp.getChildren().addAll(label, hyperlink);
+        fp.getChildren().addAll(label, hyperlink, bottomLabel);
         alert.getDialogPane().contentProperty().set(fp);
-        alert.setTitle("About Patient Register");
+        alert.setTitle("About");
         alert.setHeaderText("Patient Register \nv0.1-SNAPSHOT");
         ImageView imageView = new ImageView(this.getClass().getResource("images/info.png").toString());
         imageView.setFitWidth(40);
