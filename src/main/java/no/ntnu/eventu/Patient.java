@@ -58,7 +58,7 @@ public class Patient {
     }
 
     public String toString(){
-        return firstName +";"+lastName+";"+ssn+";"+generalPractitioner+";"+diagnosis;
+        return firstName +";"+lastName+";"+generalPractitioner+";"+ssn+";"+diagnosis;
     }
 
 
