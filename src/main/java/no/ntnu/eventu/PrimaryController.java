@@ -185,8 +185,11 @@ public class PrimaryController {
             fileManager.openFile(patientRegister);
             statusLabel.setText("Status: File successfully loaded on " + currentTime + "           Do not forget to save your changes!");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
-        } catch (FileNotFoundException | NullPointerException f) {
+        } catch (FileNotFoundException  f) {
             statusLabel.setText("Could not load file. File not found or illegal filetype");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
+        }catch (NullPointerException n){
+            statusLabel.setText("Could not load file. Operation aborted");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
         } catch (IllegalArgumentException e){
             statusLabel.setText(e.getMessage());
