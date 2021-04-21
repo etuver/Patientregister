@@ -47,7 +47,7 @@
        </Pane>
       <TableView styleClass="table" fx:id="patientsTable" prefHeight="1000.0" prefWidth="1150.0">
           <placeholder>
-              <Label text="You haven no patients. Please load a file" />
+              <Label text="You have no patients. Please load a file" />
           </placeholder>
         <columns>
             <!-- <TableColumn prefWidth="222.0" text="First name" />
