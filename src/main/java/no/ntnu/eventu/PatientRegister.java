@@ -90,6 +90,9 @@ public class PatientRegister {
 
 
     /**
+     *
+     * deactivated because test data given with the assignment is invalid
+     *
      * SSN-validator
      * Using regex might be a bit overkill on this assignment, but it is nice to practice and works well
      * @param ssn
@@ -101,6 +104,7 @@ public class PatientRegister {
      */
     public boolean ssnValidator(String ssn){
         //String regex = "^(0[1-9]|1[0-9]|2[0-9]|30|31)(0[1-9]|1[0-2])(\\d\\d)(\\d{5})$";
+        //String regex = "^((\\d\\d)(\\d{9})$)";
         //Pattern p = Pattern.compile(regex);
         //Matcher m = p.matcher(ssn);
         //return m.matches();
