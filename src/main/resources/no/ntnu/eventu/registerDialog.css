@@ -13,3 +13,37 @@ Created 18.04.2021
     -fx-background-color: #afd5ed;
     -fx-cursor: hand;
 }
+
+.doneButton {
+    -fx-background-color: #449c4c;
+    -fx-font-size: 15;
+  /*  -fx-font-weight: bold; */
+}
+
+.doneButton:hover{
+    -fx-background-color: #72f77e;
+    -fx-cursor: hand;
+
+}
+
+.cancelButton {
+    -fx-background-color: #ff6459;
+    -fx-font-size: 15;
+   /* -fx-font-weight: bold; */
+}
+
+.cancelButton:hover{
+    -fx-background-color: #ed2427;
+    /* #f5a59f */
+    -fx-cursor: hand;
+}
+
+.header {
+   -fx-text-alignment: CENTER;
+    -fx-font-size: 20;
+}
+
+.warning {
+    -fx-text-fill: #ff0004;
+    -fx-text-alignment: center;
+}
