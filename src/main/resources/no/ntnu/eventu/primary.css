@@ -3,6 +3,11 @@ Stylesheet for primary controller
 Created 14.04.2021
  */
 
+
+.toolbar {
+    -fx-background-color: linear-gradient(#98a8bd 0%, #8195af 25%, #6d86a4 100%);
+}
+
 .addUserBtn{
 
 }
@@ -69,9 +74,6 @@ Created 14.04.2021
 }
 
 
-.toolbar {
-    -fx-background-color: linear-gradient(#98a8bd 0%, #8195af 25%, #6d86a4 100%);
-}
 
 .statusbar {
     -fx-background-color: #b7c3c4;
