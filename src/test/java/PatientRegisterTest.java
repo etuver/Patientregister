@@ -14,7 +14,6 @@ public class PatientRegisterTest {
     @Test
     public void registerPatientTest(){
    PatientRegister register = new PatientRegister();
-        //Patient pat = new Patient("16019112345", "Donald", "Trump", "No need to explain", "Doctor Proctor");
         try {
             register.registerPatient("Donald", "Trump","16019112345",   "Doctor Proctor");
         }catch (IllegalArgumentException e){
