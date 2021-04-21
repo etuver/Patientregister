@@ -3,6 +3,7 @@ package no.ntnu.eventu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ public class RegisterDialogController {
     public Button doneRegisterBtn;
     public Button cancelRegisterBtn;
     public ImageView registerImageView;
+    public Label emptyRegWarningLbl;
 
 
     private Stage registerStage;
@@ -28,6 +30,9 @@ public class RegisterDialogController {
 
     @FXML
     private void initialize(){
+        if (patientRegister.getRegisterSize() == 0){
+            emptyRegWarningLbl.setText("NB! Your register is empty, you might want to load a file first");
+        }
         doneRegisterBtn.setOnAction(actionEvent -> handleRegisterOk());
         cancelRegisterBtn.setOnAction(actionEvent -> {
             try {
