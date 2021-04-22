@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="patientregister" options="--add-exports java.datatransfer/java.awt=no.ntnu.eventu" />
+      <module name="patientregister" options="" />
     </option>
   </component>
 </project>
