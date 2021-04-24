@@ -36,13 +36,18 @@ public final class FileManager implements FileInterface {
                 scanner.nextLine();
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    ;
                     String[] lineInfo = line.split(";");
                     String firstName = lineInfo[0];
                     String lastName = lineInfo[1];
                     String ssn = lineInfo[3];
                     String gpractitioner = lineInfo[2];
-                    patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner);
+                    if (ssn.length() == 10){
+                        ssn = "0"+ssn;
+                    }try {
+                        patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner);
+                    }catch (IllegalArgumentException e){
+
+                    }
                 }
             }
             scanner.close();
