@@ -164,7 +164,7 @@ public class PrimaryController {
             statusLabel.setText("Status: File successfully saved on " + currentTime + "!");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
         } catch (FileNotFoundException | NullPointerException fileNotFoundException) {
-            statusLabel.setText("Could not save file. Please try again");
+            statusLabel.setText("Could not save file. Please try again. Make sure file is not open in another program");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
         }
         }
@@ -223,9 +223,15 @@ public class PrimaryController {
                 TablePosition pos = patientsTable.getSelectionModel().getSelectedCells().get(0);
                 int row = pos.getRow();
                 Patient item = patientsTable.getItems().get(row);
-                TableColumn col = pos.getTableColumn();
-                String deleteSsn = (String) col.getCellObservableValue(item).getValue();
-                patientRegister.removePatient(deleteSsn);
+                //TableColumn col = pos.getTableColumn();
+                //String deleteSsn = (String) col.getCellObservableValue(item).getValue();
+                String deleteSsn = item.getSsn();
+
+                try {
+                    patientRegister.removePatient(deleteSsn);
+                } catch (IllegalArgumentException i){
+                    System.out.println(i.getMessage());
+                }
 
 
                 //patientsTable.getItems().remove(selectedIndex);
