@@ -1,11 +1,19 @@
+package no.ntnu.eventu;
+
 import no.ntnu.eventu.Patient;
 import no.ntnu.eventu.PatientRegister;
-import org.junit.Ignore;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PatientRegisterTest {
+    PatientRegister register = new PatientRegister();
+
+    @BeforeEach
+    public void setup(){
+    }
 
 
     /**
@@ -14,12 +22,7 @@ public class PatientRegisterTest {
      */
     @Test
     public void testTegisterPatient(){
-   PatientRegister register = new PatientRegister();
-        try {
-            register.registerPatient("Donald", "Trump","16019112345",   "Doctor Proctor");
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
+        register.registerPatient("Donald", "Trump","16019112345",   "Doctor Proctor");
         assertEquals(1, register.getRegisterSize());
     }
 
@@ -29,15 +32,10 @@ public class PatientRegisterTest {
      * Testing registering patient with invalid ssn (invalid date)
      * first two digits causing the exception
      */
-    @Ignore
+    @Test
     public void testRegisterPatientInvalidDate(){
-        PatientRegister register = new PatientRegister();
-        try {
-            register.registerPatient( "Donald", "Trump","00019112345",  "Doctor Proctor");
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-        assertEquals(0, register.getRegisterSize());
+        assertThrows(IllegalArgumentException.class,
+                () -> { register.registerPatient("Donald", "Trump", "00019112345", "Doctor Proctor");});
     }
 
     /**
@@ -45,15 +43,10 @@ public class PatientRegisterTest {
      * Testing register patient with invalid character in ssn
      * x in first number of ssn causes the exception
      */
-    @Ignore   //Ignore because ssnValidator is deactivated due to test data
+    @Test   //Ignore because ssnValidator is deactivated due to test data
     public void testRegisterPatientInvalidCharacter(){
-        PatientRegister register = new PatientRegister();
-        try {
-            register.registerPatient("Donald", "Trump", "x0019112345",  "Doctor Proctor");
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-        assertEquals(0, register.getRegisterSize());
+        assertThrows(IllegalArgumentException.class,
+                () -> { register.registerPatient("Donald", "Trump", "x0019112345", "Doctor Proctor");});
     }
 
     /**
@@ -62,13 +55,12 @@ public class PatientRegisterTest {
      */
     @Test
     public void testRegisterPatientAnyFieldEmpty(){
-        PatientRegister register = new PatientRegister();
-        try {
-            register.registerPatient( "Donald", "", "x0019112345","Doctor Proctor");
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-        assertEquals(0,register.getRegisterSize());
+        assertThrows(IllegalArgumentException.class,
+                    () -> { Patient pat = new Patient("", "Trump", "00019112345", "Doctor Proctor");});
+        assertThrows(IllegalArgumentException.class,
+                () -> { Patient pat = new Patient("Donald", "", "00019112345", "Doctor Proctor");});
+        assertThrows(IllegalArgumentException.class,
+                () -> { Patient pat = new Patient("Donald", "Trump", "", "Doctor Proctor");});
     }
 
 
@@ -78,13 +70,9 @@ public class PatientRegisterTest {
      */
     @Test
     public void testRegisterExistingPatient(){
-        PatientRegister register = new PatientRegister();
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
-        try {
-            register.registerPatient( "Donald", "Duck","24120012345",  "Doctor Proctor");
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> { register.registerPatient("Donald", "Duck", "24120012345", "Doctor Proctor")  ;});
         assertEquals(1, register.getRegisterSize());
     }
 
@@ -95,15 +83,11 @@ public class PatientRegisterTest {
      */
     @Test
     public void testRemovePatient(){
-        PatientRegister register = new PatientRegister();
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
-        try {
-            register.removePatient("16120012345"); // Remove Donald Duck
-        }catch (NullPointerException n){
-            System.out.println(n.getMessage());
-        }
-        assertEquals(1,register.getRegisterSize());
+        register.removePatient("24120012345"); // Remove Mikke Mus
+        assertEquals(1, register.getRegisterSize());
+
     }
 
     /**
@@ -112,14 +96,10 @@ public class PatientRegisterTest {
      */
     @Test
     public void testRemovePatientNull(){
-        PatientRegister register = new PatientRegister();
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
-        try {
-            register.removePatient(""); // Remove null
-        }catch (NullPointerException n){
-            System.out.println(n.getMessage());
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> { register.removePatient("");});
         assertEquals(2,register.getRegisterSize());
     }
 
@@ -129,14 +109,10 @@ public class PatientRegisterTest {
      */
     @Test
     public void testRemovePatientNotExisting(){
-        PatientRegister register = new PatientRegister();
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
-        try {
-            register.removePatient("01019912345"); // Remove null
-        }catch (NullPointerException n){
-            System.out.println(n.getMessage());
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> { register.removePatient("22");});
         assertEquals(2,register.getRegisterSize());
     }
 
@@ -147,7 +123,6 @@ public class PatientRegisterTest {
      */
     @Test
     public void testSsnValidator(){
-        PatientRegister register = new PatientRegister();
         assertTrue(register.ssnValidator("16019135954"));
     }
 
@@ -156,9 +131,8 @@ public class PatientRegisterTest {
      * Negative test
      * Testing to confirm an invalid ssn is returning false
      */
-    @Ignore  //Ignore because ssnvalidator is deactivated
+    @Test  //Ignore because ssnvalidator is deactivated
     public void testSsnvalidatorFalse(){
-        PatientRegister register = new PatientRegister();
         assertFalse(register.ssnValidator("70091212345")); // a date can`t start with 70
     }
 
@@ -166,26 +140,20 @@ public class PatientRegisterTest {
      * Negative test
      * Testing to ensure a null ssn will return false
      */
-    @Ignore // Ignore because ssn is deactivated
+    @Test// Ignore because ssn is deactivated
     public void testSsnvalidatorNull(){
-        PatientRegister register = new PatientRegister();
         assertFalse(register.ssnValidator("")); // a date can`t start with 70
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Test getting size of the register
+     */
+    @Test
+    public void testGetRegisterSize(){
+        register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
+        register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
+        assertEquals(2, register.getRegisterSize());
+    }
 
 }
