@@ -1,5 +1,6 @@
 package no.ntnu.eventu;
 
+import no.ntnu.eventu.Exception.RemoveException;
 import no.ntnu.eventu.Patient;
 import no.ntnu.eventu.PatientRegister;
 
@@ -82,12 +83,11 @@ public class PatientRegisterTest {
      * Testing to successfully remove patient from the register
      */
     @Test
-    public void testRemovePatient(){
+    public void testRemovePatient() throws RemoveException {
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
         register.removePatient("24120012345"); // Remove Mikke Mus
         assertEquals(1, register.getRegisterSize());
-
     }
 
     /**
@@ -98,7 +98,7 @@ public class PatientRegisterTest {
     public void testRemovePatientNull(){
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(RemoveException.class,
                 () -> { register.removePatient("");});
         assertEquals(2,register.getRegisterSize());
     }
@@ -111,7 +111,7 @@ public class PatientRegisterTest {
     public void testRemovePatientNotExisting(){
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(RemoveException.class,
                 () -> { register.removePatient("22");});
         assertEquals(2,register.getRegisterSize());
     }
