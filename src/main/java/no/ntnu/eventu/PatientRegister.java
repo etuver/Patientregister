@@ -1,6 +1,8 @@
 package no.ntnu.eventu;
 
 
+import no.ntnu.eventu.Exception.RemoveException;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,20 +75,24 @@ public class PatientRegister {
      *
      * @param ssn ssn of the patient to remove
      */
-    public void removePatient(String ssn) {
-        if (ssn.isBlank()) {
-            throw new IllegalArgumentException("ssn cant be null");
-        }else if (patients.stream().anyMatch(c -> c.getSsn().equals(ssn))){
-            throw new IllegalArgumentException("Patient not found");
-        } else {
+    public void removePatient(String ssn) throws RemoveException {
+       // if (ssn.isBlank()) {
+         //   throw new RemoveException("ssn cant be null");
+        //}else if (patients.stream().noneMatch(c -> c.getSsn().equals(ssn))){
+          //  throw new RemoveException("Unable to remove patient. \nPatient not found");
+       // } else {
+        boolean success = false;
             for (int i = 0; i < patients.size(); i++) {
                 if (patients.get(i).getSsn().equals(ssn)) {
                     patients.remove(i);
+                    success = true;
                 }
             }
+            if (!success){
+                throw new RemoveException("Unable to remove patient");
+            }
         }
-    }
-
+   // }
 
     /**
      * SSN-validator
