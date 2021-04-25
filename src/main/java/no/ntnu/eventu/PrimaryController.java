@@ -16,6 +16,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import no.ntnu.eventu.Exception.RemoveException;
 
 
 public class PrimaryController {
@@ -62,6 +63,8 @@ public class PrimaryController {
     //Initialise filemanager
     FileManager fileManager = new FileManager();
 
+    private static String lastSaved = "";
+
 
     /**
      * Just some test data
@@ -100,6 +103,8 @@ public class PrimaryController {
         diagnosisCol.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
         patientsTable.getColumns().add(diagnosisCol);
 
+       updateStatusLabel();
+
 
         // Refresh table every time it is loaded
         refreshTable();
@@ -107,6 +112,7 @@ public class PrimaryController {
 
         // Actionevents on buttons
         // Buttons named Menu are menuItems
+        editPatientBtn.setOnAction(event -> editPatient());
         removePatientBtn.setOnAction(actionEvent -> removePatient());
         removeMenu.setOnAction(actionEvent -> removePatient());
         saveBtn.setOnAction(actionEvent -> saveFile());
@@ -132,6 +138,24 @@ public class PrimaryController {
 
     }
 
+    private void updateStatusLabel(){
+        if (patientRegister.getRegisterSize() == 0){
+            statusLabel.setText("Welcome. Please load a file or register new patients");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/warning.png").toString()));
+        }
+        else if (lastSaved.isBlank() || lastSaved == null){
+            statusLabel.setText("File is not saved. Remember to save your data");
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/warning.png").toString()));
+        }else {
+            statusLabel.setText("Last saved on "+lastSaved);
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/warning.png").toString()));
+        }
+    }
+
+    private void editPatient(){
+        refreshTable();
+    }
+
 
     /**
      * Method to refresh patientsTable
@@ -152,16 +176,17 @@ public class PrimaryController {
         if (patientRegister.getRegisterSize() == 0){
             Alert saveEmptyRegisterAlert = new Alert(Alert.AlertType.ERROR,"Do not save empty register");
             saveEmptyRegisterAlert.setTitle("Error");
-            saveEmptyRegisterAlert .setHeaderText("Nothing to save");
+            saveEmptyRegisterAlert.setHeaderText("Nothing to save");
             saveEmptyRegisterAlert.setContentText("You have no patients to save");
             saveEmptyRegisterAlert.showAndWait();
         }else {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String currentTime = now.format(formatter);
+
         try {
             fileManager.saveFile(patientRegister);
-            statusLabel.setText("Status: File successfully saved on " + currentTime + "!");
+            lastSaved = now.format(formatter);
+            statusLabel.setText("Status: File successfully saved on " + lastSaved + "!");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/success2.png").toString()));
         } catch (FileNotFoundException | NullPointerException fileNotFoundException) {
             statusLabel.setText("Could not save file. Please try again. Make sure file is not open in another program");
@@ -229,8 +254,11 @@ public class PrimaryController {
 
                 try {
                     patientRegister.removePatient(deleteSsn);
-                } catch (IllegalArgumentException i){
-                    System.out.println(i.getMessage());
+                } catch (RemoveException i){
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR,"Error removing patient", ButtonType.OK);
+                    errorAlert.setHeaderText("Unable to remove patient");
+                    errorAlert.setContentText(i.getMessage()+"\nPlease try again.");
+                    errorAlert.showAndWait();
                 }
 
 
