@@ -39,18 +39,16 @@ public final class FileManager implements FileInterface {
                     String[] lineInfo = line.split(";");
                     String firstName = lineInfo[0];
                     String lastName = lineInfo[1];
-                    String ssn = lineInfo[3];
                     String gpractitioner = lineInfo[2];
+                    String ssn = lineInfo[3];
                     if (ssn.length() == 10){
                         ssn = "0"+ssn;
-                    }try {
+                    }
                         patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner);
-                    }catch (IllegalArgumentException e){
-
                     }
                 }
-            }
             scanner.close();
+
         } else {  //If file type is not csv
             Alert errorLoadingAlert = new Alert(Alert.AlertType.ERROR);
             errorLoadingAlert.setHeaderText("Invalid filetype chosen");
