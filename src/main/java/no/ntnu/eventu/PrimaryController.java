@@ -79,7 +79,7 @@ public class PrimaryController {
     private void initialize() {
 
 
-        // Filles table with columns
+        // Fills table with columns
         TableColumn<Patient, String> firstNameCol = new TableColumn<>("First name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         patientsTable.getColumns().add(firstNameCol);
@@ -103,6 +103,7 @@ public class PrimaryController {
         diagnosisCol.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
         patientsTable.getColumns().add(diagnosisCol);
 
+        // Update statuslabel every time primary controller loads
        updateStatusLabel();
 
 
@@ -138,6 +139,9 @@ public class PrimaryController {
 
     }
 
+    /**
+     * Method which updates the status label
+     */
     private void updateStatusLabel(){
         if (patientRegister.getRegisterSize() == 0){
             statusLabel.setText("Welcome. Please load a file or register new patients");
@@ -226,7 +230,8 @@ public class PrimaryController {
 
     /**
      * Method to remove a patient from the register
-     * Opens a confirmdialog
+     * If no patient in the table is selected, show a dialog box to tell user to select a patient first
+     * Opens a confirm dialog box
      * If user press yes, patient will be removed from register
      * If user presses no it will cancel
      */
