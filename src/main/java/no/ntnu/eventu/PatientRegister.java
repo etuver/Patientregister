@@ -19,19 +19,27 @@ public class PatientRegister {
 
     /**
      * Method to register a new patient
-     * Checks if patient with chosen ssn allready exists as two persons can`t have the same ssn
+     * Checks if patient with chosen ssn already exists as two persons can`t have the same ssn
      * Checks if chosen ssn is a valid ssn
      *
-     * @param ssn                 sosial security number
+     * @param ssn                 social security number
      * @param firstName           first name
      * @param lastName            last name
      * @param generalPractitioner name of general practitioner
      */
     public void registerPatient(String firstName, String lastName, String ssn, String generalPractitioner) throws IllegalArgumentException {
-        if (patients.stream().anyMatch(c -> c.getSsn().equals(ssn))){
-            throw new IllegalArgumentException("Patient allready exists");
+        if (patients.stream().anyMatch(c -> c.getSsn().equals(ssn))) {
+            throw new IllegalArgumentException("Patient already exists");
         } else {
             patients.add(new Patient(firstName, lastName, ssn, generalPractitioner));
+        }
+    }
+
+    public void registerPatient(String firstName, String lastName, String ssn, String generalPractitioner, String diagnosis) throws IllegalArgumentException{
+        if (patients.stream().anyMatch(c -> c.getSsn().equals(ssn))) {
+            throw new IllegalArgumentException("Patient already exists");
+        } else {
+            patients.add(new Patient(firstName, lastName, ssn, generalPractitioner, diagnosis));
         }
     }
 
@@ -55,15 +63,6 @@ public class PatientRegister {
         return success;
     }
 
-    public boolean checkIfExists(String ssn) {
-        boolean exists = false;
-        for (int i = 0; i < patients.size(); i++) {
-            if (patients.get(i).getSsn().equals(ssn)) {
-                exists = true;
-            }
-        }
-        return exists;
-    }
 
     public ArrayList<Patient> getPatients() {
         return this.patients;
@@ -72,27 +71,28 @@ public class PatientRegister {
 
     /**
      * Method to remove a patient from the register
+     * Throws RemoveException if the patient could not be removed
      *
      * @param ssn ssn of the patient to remove
      */
     public void removePatient(String ssn) throws RemoveException {
-       // if (ssn.isBlank()) {
-         //   throw new RemoveException("ssn cant be null");
+        // if (ssn.isBlank()) {
+        //   throw new RemoveException("ssn cant be null");
         //}else if (patients.stream().noneMatch(c -> c.getSsn().equals(ssn))){
-          //  throw new RemoveException("Unable to remove patient. \nPatient not found");
-       // } else {
+        //  throw new RemoveException("Unable to remove patient. \nPatient not found");
+        // } else {
         boolean success = false;
-            for (int i = 0; i < patients.size(); i++) {
-                if (patients.get(i).getSsn().equals(ssn)) {
-                    patients.remove(i);
-                    success = true;
-                }
-            }
-            if (!success){
-                throw new RemoveException("Unable to remove patient");
+        for (int i = 0; i < patients.size(); i++) {
+            if (patients.get(i).getSsn().equals(ssn)) {
+                patients.remove(i);
+                success = true;
             }
         }
-   // }
+        if (!success) {
+            throw new RemoveException("Unable to remove patient. Patient not found");
+        }
+    }
+    // }
 
     /**
      * SSN-validator
@@ -129,6 +129,12 @@ public class PatientRegister {
         return instance;
     }
 
+    /**
+     * Method to get a patient by social security number
+     *
+     * @param ssn social security number to search for
+     * @return Patient with entered ssn if found, else returns a patient null
+     */
     public Patient getPatientBySsn(String ssn) {
         Patient pat = null;
         for (int i = 0; i < patients.size(); i++) {
