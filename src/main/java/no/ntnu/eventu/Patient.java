@@ -4,12 +4,18 @@ package no.ntnu.eventu;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 public class Patient {
     String ssn; //Social security number. Unique for any person
     String firstName; // First name of the patient
     String lastName; // Last name of the patient
     String diagnosis; // The patients diagnosis
     String generalPractitioner; // The patients general practitioner
+
+
+
+
     public Patient(String firstName, String lastName, String ssn, String generalPractitioner) {
         //if (firstName == null || firstName.isBlank()) {
         if (!nameValidator(firstName)){
@@ -27,7 +33,24 @@ public class Patient {
             this.diagnosis = diagnosis;
             this.generalPractitioner = generalPractitioner;
         }
+    }
 
+    public Patient(String firstName, String lastName, String ssn, String generalPractitioner, String diagnosis) {
+        if (!nameValidator(firstName)){
+            throw new IllegalArgumentException("First name must be letters, space or dots.");
+        } else if (!nameValidator(lastName)) {
+            throw new IllegalArgumentException("Last name must be letters, space or dots. ");
+        } else if (!nameValidator(generalPractitioner)) {
+            throw new IllegalArgumentException("General Practitioner must be letters, space or dots.");
+        } else if (!ssnValidator(ssn)) {
+            throw new IllegalArgumentException("Invalid ssn. A ssn has the format ddmmyynnnnn");
+        } else {
+            this.ssn = ssn;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.diagnosis = diagnosis;
+            this.generalPractitioner = generalPractitioner;
+        }
     }
 
 
