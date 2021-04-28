@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -16,6 +19,8 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import no.ntnu.eventu.Exception.RemoveException;
 
 
@@ -113,7 +118,13 @@ public class PrimaryController {
 
         // Actionevents on buttons
         // Buttons named Menu are menuItems
-        editPatientBtn.setOnAction(event -> editPatient());
+        editPatientBtn.setOnAction(event -> {
+            try {
+                switchToEdit();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         removePatientBtn.setOnAction(actionEvent -> removePatient());
         removeMenu.setOnAction(actionEvent -> removePatient());
         saveBtn.setOnAction(actionEvent -> saveFile());
@@ -154,10 +165,6 @@ public class PrimaryController {
             statusLabel.setText("Last saved on "+lastSaved);
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/warning.png").toString()));
         }
-    }
-
-    private void editPatient(){
-        refreshTable();
     }
 
 
@@ -209,7 +216,6 @@ public class PrimaryController {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = now.format(formatter);
-        //currentTime = now.format(formatter);
         try {
             fileManager.openFile(patientRegister);
             statusLabel.setText("Status: File successfully loaded on " + currentTime + "           Do not forget to save your changes!");
@@ -222,6 +228,9 @@ public class PrimaryController {
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
         } catch (IllegalArgumentException e){
             statusLabel.setText(e.getMessage());
+            statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
+        }catch (ArrayIndexOutOfBoundsException a){
+            statusLabel.setText("Error loading file, invalid data");
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/error.png").toString()));
         }
         refreshTable();
@@ -272,6 +281,41 @@ public class PrimaryController {
         }
         refreshTable();
 
+
+    }
+
+    /**
+     * Switch to edit patient
+     */
+    @FXML
+    private void switchToEdit() throws IOException {
+        int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < 0) { // If no in table patient is selected
+            Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);
+            removeErrorAlert.setTitle("Error");
+            removeErrorAlert.setHeaderText("No patient selected");
+            removeErrorAlert.setContentText("Mark a patient in the table before pressing edit");
+            removeErrorAlert.showAndWait();
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editDialog.fxml"));
+            Parent root = loader.load();
+            EditPatientController editPatientController = loader.getController();
+
+            //Get selected patient
+            TablePosition pos = patientsTable.getSelectionModel().getSelectedCells().get(0);
+            int row = pos.getRow();
+            Patient selectedPatient = patientsTable.getItems().get(row);
+            String editSsn = selectedPatient.getSsn();
+
+            editPatientController.editPatient(editSsn);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Patient");
+            stage.showAndWait();
+            refreshTable();
+        }
 
     }
 
