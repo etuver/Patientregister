@@ -27,7 +27,7 @@ public final class FileManager implements FileInterface {
      * @param patientRegister the patientregister which filedata will be added to
      * @throws FileNotFoundException
      */
-    public void openFile(PatientRegister patientRegister) throws FileNotFoundException, IllegalArgumentException {
+    public void openFile(PatientRegister patientRegister) throws FileNotFoundException, IllegalArgumentException, ArrayIndexOutOfBoundsException{
         FileChooser fileChooser = new FileChooser();
         File file = new File(fileChooser.showOpenDialog(new Stage()).getAbsolutePath());
         if (getFileExtension(file.getAbsoluteFile().toString()).equals("CSV") || getFileExtension(file.getAbsoluteFile().toString()).equals("csv")) { //Only reads if file is csv or CSV
