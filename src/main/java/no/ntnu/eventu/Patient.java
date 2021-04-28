@@ -67,14 +67,21 @@ public class Patient {
     }
 
     public void setFirstName(String firstName) {
+        if (!nameValidator(firstName)) {
+            throw new IllegalArgumentException("First name must be letters, space or dots.");
+        }
         this.firstName = firstName;
     }
 
     public String getLastName() {
+
         return lastName;
     }
 
     public void setLastName(String lastName) {
+     if (!nameValidator(lastName)) {
+        throw new IllegalArgumentException("Last name must be letters, space or dots. ");
+    }
         this.lastName = lastName;
     }
 
@@ -91,6 +98,9 @@ public class Patient {
     }
 
     public void setGeneralPractitioner(String generalPractitioner) {
+        if (!nameValidator(generalPractitioner)) {
+            throw new IllegalArgumentException("General Practitioner must be letters, space or dots.");
+        }
         this.generalPractitioner = generalPractitioner;
     }
 
