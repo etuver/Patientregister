@@ -2,7 +2,7 @@
 
 This application is the second folder assignment for the course IDATT2001 Programmering 2 and is worth 25% of the grade. 
 
-In this assignmentwe are to make an application representing simplified version of a patient- register at a hospital
+In this assignment we are to make an application representing a simplified version of a patient- register at a hospital
 The application GUI is made with JavaJX
 The application has persistent data stored locally in a .csv file
 The application code is tested in Junit5 to assure good behavior
