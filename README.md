@@ -9,7 +9,7 @@ The application code is tested in Junit5 to assure good behavior
 
 The patient register allows the user to add new patients to the register, as well as remove or edit an existing patient. The register data can be loaded from or saved to an .csv file
 
-A patient is stored with the following attrbutes:
+A patient is stored with the following attributes:
 - First Name
 - Last Name
 - Social Security Number
