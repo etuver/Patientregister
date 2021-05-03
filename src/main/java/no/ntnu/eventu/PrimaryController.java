@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -22,6 +23,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import no.ntnu.eventu.Dialogs.AboutDialog;
+import no.ntnu.eventu.Dialogs.ExitDialog;
+import no.ntnu.eventu.Dialogs.NoPatientSelectedDialog;
+import no.ntnu.eventu.Dialogs.RemoveDialog;
 import no.ntnu.eventu.Exception.RemoveException;
 
 
@@ -74,6 +79,8 @@ public class PrimaryController {
 
     //filemanager
     FileManager fileManager = new FileManager();
+
+    DialogFactory dialogFactory = new DialogFactory();
 
     private static String lastSaved = "";
 
@@ -274,18 +281,29 @@ public class PrimaryController {
     public void removePatient() {
         int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex < 0) {
+            NoPatientSelectedDialog noSelected = (NoPatientSelectedDialog) dialogFactory.getDialog(DialogFactory.DialogType.NoSelected);
+            noSelected.getDialog().showAndWait();
+            /**
+             *
+
             Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);
             removeErrorAlert.setTitle("Error");
             removeErrorAlert.setHeaderText("No patient selected");
             removeErrorAlert.setContentText("Mark a patient in the table before pressing remove");
             removeErrorAlert.showAndWait();
+             */
         } else {
+            /**
+             *
+
             Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove patient?", ButtonType.YES, ButtonType.NO);
             removeAlert.setTitle("Remove patient");
             removeAlert.setHeaderText("Are you sure you want to remove this patient from the register?\nThis can`t be undone!");
             removeAlert.setContentText("Press yes to confirm, no to cancel");
-            removeAlert.showAndWait();
-            if (removeAlert.getResult() == ButtonType.YES) {
+            removeAlert.showAndWait(); */
+            RemoveDialog removeDialog = (RemoveDialog) dialogFactory.getDialog(DialogFactory.DialogType.Remove);
+            if (removeDialog.getDialog().showAndWait().get() == ButtonType.YES){
+            //if (removeDialog.getResult() == ButtonType.YES) {
 
                 // Get selected patient
                 TablePosition pos = patientsTable.getSelectionModel().getSelectedCells().get(0);
@@ -320,11 +338,17 @@ public class PrimaryController {
     private void openEditPatient() throws IOException {
         int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex < 0) { // If no in table patient is selected
+            NoPatientSelectedDialog noSelected = (NoPatientSelectedDialog) dialogFactory.getDialog(DialogFactory.DialogType.NoSelected);
+            noSelected.getDialog().showAndWait();
+            /**
+             *
+
             Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);
             removeErrorAlert.setTitle("Error");
             removeErrorAlert.setHeaderText("No patient selected");
             removeErrorAlert.setContentText("Mark a patient in the table before pressing edit");
             removeErrorAlert.showAndWait();
+             */
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("editDialog.fxml"));
             Parent root = loader.load();
@@ -375,8 +399,12 @@ public class PrimaryController {
      * GitLab repo closed until due date for the assignment
      */
     private void helpDialog() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "loadAlert");
-        alert.setHeaderText("loaderalert");
+        AboutDialog aboutDialog = (AboutDialog) dialogFactory.getDialog(DialogFactory.DialogType.About);
+        aboutDialog.getDialog().showAndWait();
+        /**
+         *
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         FlowPane fp = new FlowPane();
         Label label = new Label("Application created by " +
                 "\n(C)Even Tuverud\n" +
@@ -402,6 +430,7 @@ public class PrimaryController {
         imageView.setFitHeight(40);
         alert.setGraphic(imageView);
         alert.showAndWait();
+         */
     }
 
 
@@ -410,15 +439,25 @@ public class PrimaryController {
      * imports class Alert to create a confirmation box before exiting
      */
     private void exitProgram() {
+        ExitDialog exitDialog = (ExitDialog) dialogFactory.getDialog(DialogFactory.DialogType.Exit);
+        //Optional<ButtonType> result = exitDialog.getDialog().showAndWait();
+        //if (result.isPresent() && result.get() == ButtonType.YES){
+        if (exitDialog.getDialog().showAndWait().get() == ButtonType.YES){
+            Platform.exit();
+            System.exit(0);
+        }
+        /**
+         *
+
         Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit? \nAll unsaved progress will be lost!", ButtonType.YES, ButtonType.NO);
         exitAlert.setTitle("Confirm exit");
         exitAlert.setHeaderText("Exit application?");
         exitAlert.setAlertType(Alert.AlertType.WARNING);
         exitAlert.showAndWait();
         if (exitAlert.getResult() == ButtonType.YES) {
-            Platform.exit();
-            System.exit(0);
+
         }
+         */
     }
 
 
