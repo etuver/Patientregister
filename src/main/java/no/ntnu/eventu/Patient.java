@@ -5,19 +5,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * A class representing a patient
+ * @Author Eventu
+ */
 
 public class Patient {
-    String ssn; //Social security number. Unique for any person
-    String firstName; // First name of the patient
-    String lastName; // Last name of the patient
-    String diagnosis; // The patients diagnosis
-    String generalPractitioner; // The patients general practitioner
+   private String ssn; //Social security number. Unique for any person
+   private String firstName; // First name of the patient
+   private String lastName; // Last name of the patient
+   private String diagnosis; // The patients diagnosis
+   private String generalPractitioner; // The patients general practitioner
 
 
-
-
+    /**
+     * Method to create a patient with no diagnosis
+     * throws illegalargumentexception if any name or Social security number is invalid
+     * @param firstName the first name can only consist letters and blank spaces
+     * @param lastName the last name can only consist letters and blank spaces
+     * @param ssn the ssn can only be 11 digits and with a format of DDMMYYNNNNNNN
+     * @param generalPractitioner name of the general practitioner can only consist letters and blank spaces
+     */
     public Patient(String firstName, String lastName, String ssn, String generalPractitioner) {
-        //if (firstName == null || firstName.isBlank()) {
         if (!nameValidator(firstName)){
             throw new IllegalArgumentException("First name must be letters, space or dots.");
         } else if (!nameValidator(lastName)) {
@@ -35,11 +44,19 @@ public class Patient {
         }
     }
 
+    /**
+     * Method to create a patient with a diagnosis
+     * throws illegalargumentexception if any name or Social security number is invalid
+     * @param firstName the first name can only consist letters and blank spaces
+     * @param lastName the last name can only consist letters and blank spaces
+     * @param ssn the ssn can only be 11 digits and with a format of DDMMYYNNNNNNN
+     * @param generalPractitioner name of the general practitioner can only consist letters and blank spaces
+     */
     public Patient(String firstName, String lastName, String ssn, String generalPractitioner, String diagnosis) {
         if (!nameValidator(firstName)){
             throw new IllegalArgumentException("First name must be letters, space or dots.");
         } else if (!nameValidator(lastName)) {
-            throw new IllegalArgumentException("Last name must be letters, space or dots. ");
+            throw new IllegalArgumentException("Last name must be letters, space or dots.");
         } else if (!nameValidator(generalPractitioner)) {
             throw new IllegalArgumentException("General Practitioner must be letters, space or dots.");
         } else if (!ssnValidator(ssn)) {
@@ -66,6 +83,11 @@ public class Patient {
         return firstName;
     }
 
+    /**
+     * Method to  set the first name of a patient
+     * Will only be added if the name is valid, else throws a ILlegalArgumentException
+     * @param firstName the new first name of the patient
+     */
     public void setFirstName(String firstName) {
         if (!nameValidator(firstName)) {
             throw new IllegalArgumentException("First name must be letters, space or dots.");
@@ -78,6 +100,11 @@ public class Patient {
         return lastName;
     }
 
+    /**
+     * Method to set the last name of a patient
+     * Will only be added if the name is valid, else throws a ILlegalArgumentException
+     * @param lastName the new last name of the patient
+     */
     public void setLastName(String lastName) {
      if (!nameValidator(lastName)) {
         throw new IllegalArgumentException("Last name must be letters, space or dots. ");
@@ -97,6 +124,11 @@ public class Patient {
         return generalPractitioner;
     }
 
+    /**
+     * method to set the name of a general practitioner for a patient
+     * Will only be added if the name is valid, else throws a ILlegalArgumentException
+     * @param generalPractitioner the new name of the general practitoner
+     */
     public void setGeneralPractitioner(String generalPractitioner) {
         if (!nameValidator(generalPractitioner)) {
             throw new IllegalArgumentException("General Practitioner must be letters, space or dots.");
@@ -104,14 +136,17 @@ public class Patient {
         this.generalPractitioner = generalPractitioner;
     }
 
+    /**
+     * A tostring for the person, formatted with semicolons to fit writing to csv file
+     * @return a person
+     */
     public String toString() {
         return firstName + ";" + lastName + ";" + generalPractitioner + ";" + ssn + ";" + diagnosis;
     }
 
 
     /**
-     * SSN-validator
-     * Using regex might be a bit overkill on this assignment, but it is nice to practice and works well
+     * SSN-validator making sure the person is a real person
      *
      * @param ssn Two first digits is the day. A valid day is any from 01-31. not taking leap year, months or D-nr into consideration
      *            Digit 3 and 4 is month. A valid month is from 01-12
@@ -127,6 +162,12 @@ public class Patient {
         return m.matches();
     }
 
+    /**
+     * Checks if a name is valid
+     * A name is valid if it only consists of letters or blank spaces and can not be blank
+     * @param name the name to check
+     * @return true if valid, else false
+     */
     public boolean nameValidator(String name){
         return (name.matches("^[øØæÆåÅa-zA-Z.\\s]*$") && !name.isBlank());
     }

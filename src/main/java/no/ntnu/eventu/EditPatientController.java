@@ -39,8 +39,8 @@ public class EditPatientController {
     private TextField diagnosisText;
 
 
-    PatientRegister patientRegister = PatientRegister.getInstance();
-    Patient patientToEdit;
+    private PatientRegister patientRegister = PatientRegister.getInstance();
+    private Patient patientToEdit;
 
 
     public void editPatient(String ssn) {
