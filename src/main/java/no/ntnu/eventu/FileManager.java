@@ -41,10 +41,19 @@ public final class FileManager implements FileInterface {
                     String lastName = lineInfo[1];
                     String gpractitioner = lineInfo[2];
                     String ssn = lineInfo[3];
+                    String diagnosis = "";
+                    if (lineInfo.length > 4){ // If there is a diagnosis
+                        diagnosis = lineInfo[4];
+                    }else { // if no diagnosis
+                        diagnosis = "";
+                    }
+                    if (diagnosis.equals("null")){
+                        diagnosis = "";
+                    }
                     if (ssn.length() == 10){
                         ssn = "0"+ssn;
                     }
-                        patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner);
+                        patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner, diagnosis);
                     }
                 }
             scanner.close();
