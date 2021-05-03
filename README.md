@@ -17,3 +17,5 @@ A patient is stored with the following attributes:
 - Diagnosis
 
 The full assignment can be found as a .pdf attachment
+
+![Patient register](src/main/resources/no/ntnu/eventu/images/Patient%20Register.JPG)
