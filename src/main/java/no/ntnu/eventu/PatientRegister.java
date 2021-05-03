@@ -96,7 +96,6 @@ public class PatientRegister {
 
     /**
      * SSN-validator
-     * Using regex might be a bit overkill on this assignment, but it is nice to practice and works well
      *
      * @param ssn Two first digits is the day. A valid day is any from 01-31. not taking leap year, months or D-nr into consideration
      *            Digit 3 and 4 is month. A valid month is from 01-12
@@ -144,10 +143,6 @@ public class PatientRegister {
         }
         return pat;
     }
-
-
-    //editpatient
-
 
 }
 

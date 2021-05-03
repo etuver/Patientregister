@@ -45,7 +45,7 @@
               <Button fx:id="saveBtn" layoutX="502.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="saveBtn" text="" />
           </children>
        </Pane>
-      <TableView styleClass="table" fx:id="patientsTable" prefHeight="1000.0" prefWidth="1150.0">
+      <TableView fx:id="patientsTable" prefHeight="1000.0" prefWidth="1150.0" styleClass="table">
           <placeholder>
               <Label text="You have no patients. Please load a file" />
           </placeholder>
