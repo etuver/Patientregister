@@ -3,11 +3,16 @@
 This application is the second folder assignment for the course IDATT2001 Programmering 2 and is worth 25% of the grade. 
 
 In this assignment we are to make an application representing a simplified version of a patient- register at a hospital
+
 The application GUI is made with JavaJX
+
 The application has persistent data stored locally in a .csv file
+
 The application code is tested in Junit5 to assure good behavior
 
-The patient register allows the user to add new patients to the register, as well as remove or edit an existing patient. The register data can be loaded from or saved to an .csv file
+The patient register allows the user to add new patients to the register, as well as remove or edit an existing patient. 
+
+The register data can be loaded from or saved to an .csv file
 
 A patient is stored with the following attributes:
 - First Name
@@ -18,4 +23,4 @@ A patient is stored with the following attributes:
 
 The full assignment can be found as a .pdf attachment
 
-![Patient register](src/main/resources/no/ntnu/eventu/images/Patient%20Register.JPG)
+![Patient register](src/main/resources/no/ntnu/eventu/images/PatientRegister.JPG)
