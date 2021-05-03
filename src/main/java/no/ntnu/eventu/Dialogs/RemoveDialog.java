@@ -3,8 +3,9 @@ package no.ntnu.eventu.Dialogs;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import no.ntnu.eventu.Interfaces.DialogFactoryInterface;
 
-public class RemoveDialog implements DialogFactoryInterface{
+public class RemoveDialog implements DialogFactoryInterface {
     @Override
     public Dialog getDialog() {
         Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove patient?", ButtonType.YES, ButtonType.NO);

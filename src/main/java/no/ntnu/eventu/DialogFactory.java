@@ -1,6 +1,7 @@
 package no.ntnu.eventu;
 
 import no.ntnu.eventu.Dialogs.*;
+import no.ntnu.eventu.Interfaces.DialogFactoryInterface;
 
 public class DialogFactory {
 

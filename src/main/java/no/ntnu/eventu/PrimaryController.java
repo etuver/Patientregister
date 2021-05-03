@@ -89,8 +89,8 @@ public class PrimaryController {
      * Just some test data
      */
     public void fillWithTestData() {
-        patientRegister.registerPatient("Donald", "Trump", "16019295843", "A poor guy");
-        patientRegister.registerPatient("Mikke", "Mus", "02019112345", "Petter Smart");
+        patientRegister.registerPatient("Donald", "Trump", "16019295843", "A poor guy", "Nobody knows");
+        patientRegister.registerPatient("Mikke", "Mus", "02019112345", "Petter Smart", "Store ører");
     }
 
 
@@ -129,6 +129,7 @@ public class PrimaryController {
         // Refresh table every time it is loaded
         refreshTable();
 
+        //Double click a patient to edit
         patientsTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -144,7 +145,6 @@ public class PrimaryController {
 
         // Actionevents on buttons
         // Buttons named Menu are the menuItems
-
         removePatientBtn.setOnAction(actionEvent -> removePatient());
         removeMenu.setOnAction(actionEvent -> removePatient());
         saveBtn.setOnAction(actionEvent -> saveFile());
@@ -199,7 +199,6 @@ public class PrimaryController {
             statusBarIcon.setImage(new Image(this.getClass().getResource("images/warning.png").toString()));
         }
     }
-
 
     /**
      * Method to refresh patientsTable
@@ -310,7 +309,6 @@ public class PrimaryController {
                 int row = pos.getRow();
                 Patient patientToRemove = patientsTable.getItems().get(row);
                 String deleteSsn = patientToRemove.getSsn();
-
                 try {
                     patientRegister.removePatient(deleteSsn);
                 } catch (RemoveException i) {
@@ -369,7 +367,6 @@ public class PrimaryController {
             stage.showAndWait();
             refreshTable();
         }
-
     }
 
 

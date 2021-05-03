@@ -1,4 +1,4 @@
-package no.ntnu.eventu.Dialogs;
+package no.ntnu.eventu.Interfaces;
 
 import javafx.scene.control.Dialog;
 

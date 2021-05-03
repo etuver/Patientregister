@@ -1,4 +1,6 @@
-package no.ntnu.eventu;
+package no.ntnu.eventu.Interfaces;
+
+import no.ntnu.eventu.PatientRegister;
 
 import java.io.FileNotFoundException;
 

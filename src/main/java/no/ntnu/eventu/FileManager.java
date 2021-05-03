@@ -4,6 +4,7 @@ package no.ntnu.eventu;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import no.ntnu.eventu.Interfaces.FileInterface;
 
 
 import java.io.File;

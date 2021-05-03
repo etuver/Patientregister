@@ -103,7 +103,7 @@ public class RegisterDialogController {
      *
      * @return true if all fields are valid, false if any input is wrong, and displays a dialog box with the errormessage
      */
-    private boolean validInput() { // todo move to patientregister or patient?
+    private boolean validInput() {
         boolean valid = false;
         String errorMessage = "";
         if (firstNameText.getText() == null || firstNameText.getText().length() == 0) {

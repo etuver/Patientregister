@@ -1,14 +1,12 @@
 package no.ntnu.eventu.Dialogs;
 
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
+import no.ntnu.eventu.Interfaces.DialogFactoryInterface;
 
-import java.net.URL;
-
-public class AboutDialog implements DialogFactoryInterface{
+public class AboutDialog implements DialogFactoryInterface {
     @Override
     public Dialog<ButtonType> getDialog() {
         Alert aboutAlert = new Alert(Alert.AlertType.INFORMATION);
