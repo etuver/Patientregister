@@ -43,27 +43,6 @@ public class PatientRegister {
         }
     }
 
-    /**
-     * NOT USED IN THIS ASSIGNMENT
-     * Method to add diagnosis to a patient
-     *
-     * @param ssn       social security number of the patient
-     * @param diagnosis the diagnosis
-     * @return true if successfully added
-     */
-    public boolean registerDiagnosis(String ssn, String diagnosis) {
-        boolean success = false;
-        for (int i = 0; i < patients.size(); i++) {
-            if (patients.get(i).getSsn().equals(ssn)) {
-                Patient pat = patients.get(i);
-                pat.setDiagnosis(diagnosis);
-                success = true;
-            }
-        }
-        return success;
-    }
-
-
     public ArrayList<Patient> getPatients() {
         return this.patients;
     }
