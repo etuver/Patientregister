@@ -1,0 +1,18 @@
+package no.ntnu.eventu.Dialogs;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+
+public class ExitDialog implements DialogFactoryInterface {
+
+    @Override
+    public Dialog<ButtonType> getDialog(){
+        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit? \nAll unsaved progress will be lost!", ButtonType.YES, ButtonType.NO);
+        exitAlert.setTitle("Confirm exit");
+        exitAlert.setHeaderText("Exit application?");
+        exitAlert.setAlertType(Alert.AlertType.WARNING);
+        return exitAlert;
+    }
+
+}
