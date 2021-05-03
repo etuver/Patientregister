@@ -13,14 +13,24 @@ import java.io.IOException;
 public class RegisterDialogController {
 
 
-    public TextField firstNameText;
-    public TextField lastNameText;
-    public TextField ssnText;
-    public TextField gPText;
-    public Button doneRegisterBtn;
-    public Button cancelRegisterBtn;
-    public ImageView registerImageView;
-    public Label emptyRegWarningLbl;
+    @FXML
+    private TextField firstNameText;
+    @FXML
+    private TextField lastNameText;
+    @FXML
+    private TextField ssnText;
+    @FXML
+    private TextField gPText;
+    @FXML
+    private Button doneRegisterBtn;
+    @FXML
+    private Button cancelRegisterBtn;
+    @FXML
+    private ImageView registerImageView;
+    @FXML
+    private Label emptyRegWarningLbl;
+    @FXML
+    private TextField diagnosisText;
 
 
     private PatientRegister patientRegister = PatientRegister.getInstance();
@@ -46,7 +56,7 @@ public class RegisterDialogController {
      * When ok button is pressed
      * First checks if the input is valid. If invalid input, shows a Dialog box with which fields is invalid.
      * If valid, Tries to register a patient, and gives the user a dialog to confirm it was successful.
-     * If registering the Patient was unsuccessfully, catches the exception and shows exceptionmessage in a alert dialog. Should
+     * If registering the Patient was unsuccessfully, catches the exception and shows exception message in a alert dialog. Should
      * normally not reach this point because of the validInput() first.
      * <p>
      * ValidInput first is to check all input fields at once to improve user experience instead of one dialog box for each invalid input
@@ -54,7 +64,7 @@ public class RegisterDialogController {
     public void handleRegisterOk() {
         if (validInput()) {
             try {
-                patientRegister.registerPatient(firstNameText.getText(), lastNameText.getText(), ssnText.getText(), gPText.getText());
+                patientRegister.registerPatient(firstNameText.getText(), lastNameText.getText(), ssnText.getText(), gPText.getText(), diagnosisText.getText());
                 Alert okAlert = new Alert(Alert.AlertType.INFORMATION);
                 okAlert.setHeaderText("Success!");
                 okAlert.setContentText("Patient successfully registered");
@@ -83,7 +93,8 @@ public class RegisterDialogController {
      */
     @FXML
     private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
+        Stage stage = (Stage) doneRegisterBtn.getScene().getWindow();
+        stage.close();
     }
 
 
