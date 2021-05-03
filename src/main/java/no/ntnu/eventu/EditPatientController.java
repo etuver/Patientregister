@@ -16,33 +16,43 @@ import no.ntnu.eventu.Exception.RemoveException;
 
 public class EditPatientController {
 
-    public Button secondaryButton;
-    public TextField firstNameText;
-    public TextField lastNameText;
-    public TextField gPText;
-    public Button doneEditBtn;
-    public Button cancelEditBtn;
-    public Label editWarningLbl;
-    public Label ssnLabel;
-    public TextField ssnText;
+
+    @FXML
+    private Button secondaryButton;
+    @FXML
+    private TextField firstNameText;
+    @FXML
+    private TextField lastNameText;
+    @FXML
+    private TextField gPText;
+    @FXML
+    private Button doneEditBtn;
+    @FXML
+    private Button cancelEditBtn;
+    @FXML
+    private Label editWarningLbl;
+    @FXML
+    private Label ssnLabel;
+    @FXML
+    private TextField ssnText;
+    @FXML
+    private TextField diagnosisText;
 
 
     PatientRegister patientRegister = PatientRegister.getInstance();
     Patient patientToEdit;
 
-    @FXML
-    private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
-    }
 
-    public void editPatient(String ssn){
+    public void editPatient(String ssn) {
 
-       patientToEdit = patientRegister.getPatientBySsn(ssn);
+        patientToEdit = patientRegister.getPatientBySsn(ssn);
         patientToEdit = patientRegister.getPatientBySsn(ssn);
         firstNameText.setText(patientToEdit.getFirstName());
         lastNameText.setText(patientToEdit.getLastName());
         gPText.setText(patientToEdit.getGeneralPractitioner());
-        ssnText.setText(ssn);
+        ssnText.setPromptText(ssn);
+        diagnosisText.setText(patientToEdit.getDiagnosis());
+
         // SSN not editable
         ssnText.setEditable(false);
         ssnText.setMouseTransparent(true);
@@ -52,10 +62,11 @@ public class EditPatientController {
     @FXML
     private void handleEditOK() {
         try {
-            Patient patientToEdit = patientRegister.getPatientBySsn(ssnText.getText());
+            // Patient patientToEdit = patientRegister.getPatientBySsn(ssnText.getText());
             patientToEdit.setFirstName(firstNameText.getText());
             patientToEdit.setLastName(lastNameText.getText());
             patientToEdit.setGeneralPractitioner(gPText.getText());
+            patientToEdit.setDiagnosis(diagnosisText.getText());
             Alert okAlert = new Alert(Alert.AlertType.INFORMATION);
             okAlert.setHeaderText("Success!");
             okAlert.setContentText("Patient successfully edited");
@@ -66,30 +77,26 @@ public class EditPatientController {
             okAlert.showAndWait();
             closeEdit();
 
-        }catch ( IllegalArgumentException i){
+        } catch (IllegalArgumentException i) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
             alert.setTitle("Error");
             alert.setHeaderText("There was an error editing the patient");
             alert.setContentText(i.getMessage());
             alert.showAndWait();
-            //closeEdit();
-
-
         }
     }
 
-    private void closeEdit(){
+
+    private void closeEdit() {
         Stage stage = (Stage) doneEditBtn.getScene().getWindow();
         stage.close();
     }
 
 
-
     public void editCancel(ActionEvent event) {
-        Window window =   ((Node)(event.getSource())).getScene().getWindow();
-        if (window instanceof Stage){
+        Window window = ((Node) (event.getSource())).getScene().getWindow();
+        if (window instanceof Stage) {
             ((Stage) window).close();
         }
-
     }
 }
