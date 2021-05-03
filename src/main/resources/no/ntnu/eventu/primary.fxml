@@ -4,6 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.Tooltip.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
@@ -38,11 +39,26 @@
       </MenuBar>
        <Pane id="topBar" maxHeight="250" minHeight="100" prefWidth="977.0" styleClass="toolbar">
           <children>
-              <Button fx:id="addPatientBtn" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="addPatientBtn" text="" />
-              <Button fx:id="editPatientBtn" layoutX="147.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="editPatientBtn" text="" />
-              <Button fx:id="removePatientBtn" layoutX="264.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="removePatientBtn" text="" />
-              <Button fx:id="loadBtn" layoutX="384.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="loadBtn" text="" />
-              <Button fx:id="saveBtn" layoutX="502.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="saveBtn" text="" />
+              <Button fx:id="addPatientBtn" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="addPatientBtn" text="">
+               <tooltip>
+                  <Tooltip text="Add patient" />
+               </tooltip></Button>
+              <Button fx:id="editPatientBtn" layoutX="147.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="editPatientBtn" text="">
+               <tooltip>
+                  <Tooltip text="Edit patient" />
+               </tooltip></Button>
+              <Button fx:id="removePatientBtn" layoutX="264.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="removePatientBtn" text="">
+               <tooltip>
+                  <Tooltip text="Remove patient" />
+               </tooltip></Button>
+              <Button fx:id="loadBtn" layoutX="384.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="loadBtn" text="">
+               <tooltip>
+                  <Tooltip text="Load file" />
+               </tooltip></Button>
+              <Button fx:id="saveBtn" layoutX="502.0" layoutY="22.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="106.0" styleClass="saveBtn" text="">
+               <tooltip>
+                  <Tooltip text="Save file" />
+               </tooltip></Button>
           </children>
        </Pane>
       <TableView fx:id="patientsTable" prefHeight="1000.0" prefWidth="1150.0" styleClass="table">

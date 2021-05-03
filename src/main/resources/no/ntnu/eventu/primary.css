@@ -72,6 +72,9 @@ Created 14.04.2021
     -fx-background-color: #afd5ed;
     -fx-cursor: hand;
 }
+.tooltip{
+    -fx-show-delay: 300ms;
+}
 
 
 
