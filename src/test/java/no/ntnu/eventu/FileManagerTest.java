@@ -1,5 +1,6 @@
 package no.ntnu.eventu;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -9,21 +10,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileManagerTest {
 
-
+    PatientRegister patientRegister = new PatientRegister();
+    FileManager fileManager = new FileManager();
 
     /**
-     * Testing to open a file and add to register
+     * Testing to open a file and add to register successfully
      */
-    @Disabled
+    @Test
     public void testOpenFile(){
-        PatientRegister patientRegister = new PatientRegister();
-        FileManager fileManager = new FileManager();
+
         try {
             fileManager.openFile(patientRegister);
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println(fileNotFoundException.getMessage());
         }
-        assertEquals(15,patientRegister.getRegisterSize());
+        assertEquals(7, patientRegister.getRegisterSize());
     }
 
 }

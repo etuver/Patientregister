@@ -44,7 +44,7 @@ public class PatientRegisterTest {
      * Testing register patient with invalid character in ssn
      * x in first number of ssn causes the exception
      */
-    @Test   //Ignore because ssnValidator is deactivated due to test data
+    @Test
     public void testRegisterPatientInvalidCharacter(){
         assertThrows(IllegalArgumentException.class,
                 () -> { register.registerPatient("Donald", "Trump", "x0019112345", "Doctor Proctor");});
@@ -52,7 +52,7 @@ public class PatientRegisterTest {
 
     /**
      * Negative test
-     * Testing register patient with no last name
+     * Testing register patient with empty fields
      */
     @Test
     public void testRegisterPatientAnyFieldEmpty(){
@@ -62,6 +62,10 @@ public class PatientRegisterTest {
                 () -> { Patient pat = new Patient("Donald", "", "00019112345", "Doctor Proctor");});
         assertThrows(IllegalArgumentException.class,
                 () -> { Patient pat = new Patient("Donald", "Trump", "", "Doctor Proctor");});
+        assertThrows(IllegalArgumentException.class,
+                () -> { Patient pat = new Patient("Donald", "Trump", "", "");});
+        assertThrows(IllegalArgumentException.class,
+                () -> { Patient pat = new Patient("Donald", "Trump", "", "Doctor Proctor", "");});
     }
 
 
@@ -112,7 +116,7 @@ public class PatientRegisterTest {
         register.registerPatient("Mikke","Mus","24120012345",   "Doctor Proctor");
         register.registerPatient( "Donald", "Duck","16120012345",  "Doctor Proctor");
         assertThrows(RemoveException.class,
-                () -> { register.removePatient("22");});
+                () -> { register.removePatient("02030012345");});
         assertEquals(2,register.getRegisterSize());
     }
 
@@ -131,7 +135,7 @@ public class PatientRegisterTest {
      * Negative test
      * Testing to confirm an invalid ssn is returning false
      */
-    @Test  //Ignore because ssnvalidator is deactivated
+    @Test
     public void testSsnvalidatorFalse(){
         assertFalse(register.ssnValidator("70091212345")); // a date can`t start with 70
     }
@@ -140,7 +144,7 @@ public class PatientRegisterTest {
      * Negative test
      * Testing to ensure a null ssn will return false
      */
-    @Test// Ignore because ssn is deactivated
+    @Test
     public void testSsnvalidatorNull(){
         assertFalse(register.ssnValidator("")); // a date can`t start with 70
     }
