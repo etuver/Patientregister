@@ -6,6 +6,13 @@ import javafx.scene.control.Dialog;
 import no.ntnu.eventu.Interfaces.DialogFactoryInterface;
 
 public class RemoveDialog implements DialogFactoryInterface {
+
+    /**
+     * A confirmation dialog before removing a patient from the register
+     * Contains a yes and no button
+     *
+     * @return the dialog
+     */
     @Override
     public Dialog getDialog() {
         Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove patient?", ButtonType.YES, ButtonType.NO);

@@ -5,7 +5,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import no.ntnu.eventu.Interfaces.DialogFactoryInterface;
 
+
 public class NoPatientSelectedDialog implements DialogFactoryInterface {
+
+    /**
+     * Dialog to call if no patient is selected in the table
+     *
+     * @return the dialog
+     */
     @Override
     public Dialog getDialog() {
         Alert noSelectedAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);

@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class PatientRegister
+ *
+ * @Author Eventu
+ */
 public class PatientRegister {
 
 
@@ -18,9 +23,9 @@ public class PatientRegister {
 
 
     /**
-     * Method to register a new patient
+     * Method to register a new patient without diagnosis
      * Checks if patient with chosen ssn already exists as two persons can`t have the same ssn
-     * Checks if chosen ssn is a valid ssn
+     * Else tries to create a new patient
      *
      * @param ssn                 social security number
      * @param firstName           first name
@@ -35,7 +40,17 @@ public class PatientRegister {
         }
     }
 
-    public void registerPatient(String firstName, String lastName, String ssn, String generalPractitioner, String diagnosis) throws IllegalArgumentException{
+    /**
+     * Method to register a new patient with diagnosis
+     * Checks if patient with chosen ssn already exists as two persons can`t have the same ssn
+     * Else tries to create a new patient
+     *
+     * @param ssn                 social security number
+     * @param firstName           first name
+     * @param lastName            last name
+     * @param generalPractitioner name of general practitioner
+     */
+    public void registerPatient(String firstName, String lastName, String ssn, String generalPractitioner, String diagnosis) throws IllegalArgumentException {
         if (patients.stream().anyMatch(c -> c.getSsn().equals(ssn))) {
             throw new IllegalArgumentException("Patient already exists");
         } else {
@@ -43,6 +58,11 @@ public class PatientRegister {
         }
     }
 
+    /**
+     * method to get the list
+     *
+     * @returns the patients
+     */
     public ArrayList<Patient> getPatients() {
         return this.patients;
     }
@@ -55,11 +75,6 @@ public class PatientRegister {
      * @param ssn ssn of the patient to remove
      */
     public void removePatient(String ssn) throws RemoveException {
-        // if (ssn.isBlank()) {
-        //   throw new RemoveException("ssn cant be null");
-        //}else if (patients.stream().noneMatch(c -> c.getSsn().equals(ssn))){
-        //  throw new RemoveException("Unable to remove patient. \nPatient not found");
-        // } else {
         boolean success = false;
         for (int i = 0; i < patients.size(); i++) {
             if (patients.get(i).getSsn().equals(ssn)) {
@@ -71,7 +86,7 @@ public class PatientRegister {
             throw new RemoveException("Unable to remove patient. Patient not found");
         }
     }
-    // }
+
 
     /**
      * SSN-validator
@@ -84,7 +99,6 @@ public class PatientRegister {
      */
     public boolean ssnValidator(String ssn) {
         String regex = "^(0[1-9]|1[0-9]|2[0-9]|30|31)(0[1-9]|1[0-2])(\\d\\d)(\\d{5})$";
-        //String regex = "^((\\d\\d)(\\d{9})$)";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(ssn);
         return m.matches();
@@ -92,23 +106,8 @@ public class PatientRegister {
 
 
     /**
-     * Method to get size of the list
-     *
-     * @return size
-     */
-    public int getRegisterSize() {
-        return patients.size();
-    }
-
-
-    private static final PatientRegister instance = new PatientRegister();
-
-    public static PatientRegister getInstance() {
-        return instance;
-    }
-
-    /**
      * Method to get a patient by social security number
+     * Used to find a specific patient
      *
      * @param ssn social security number to search for
      * @return Patient with entered ssn if found, else returns a patient null
@@ -122,6 +121,24 @@ public class PatientRegister {
         }
         return pat;
     }
+
+    /**
+     * Method to get size of the list
+     *
+     * @return size
+     */
+    public int getRegisterSize() {
+        return patients.size();
+    }
+
+
+    private static final PatientRegister instance = new PatientRegister();
+
+
+    public static PatientRegister getInstance() {
+        return instance;
+    }
+
 
 }
 

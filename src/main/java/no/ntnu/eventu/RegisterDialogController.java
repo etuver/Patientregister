@@ -10,9 +10,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller class for register new patient
+ *
+ * @author Eventu
+ */
 public class RegisterDialogController {
 
 
+    // Textfields
     @FXML
     private TextField firstNameText;
     @FXML
@@ -22,20 +28,26 @@ public class RegisterDialogController {
     @FXML
     private TextField gPText;
     @FXML
+    private TextField diagnosisText;
+
+    //Buttons
+    @FXML
     private Button doneRegisterBtn;
     @FXML
     private Button cancelRegisterBtn;
-    @FXML
-    private ImageView registerImageView;
+
+    // Labels
     @FXML
     private Label emptyRegWarningLbl;
-    @FXML
-    private TextField diagnosisText;
 
 
     private PatientRegister patientRegister = PatientRegister.getInstance();
 
 
+    /**
+     * initializes when the dialog opens
+     * If the patientregister is empty tells the user a warning
+     */
     @FXML
     private void initialize() {
         if (patientRegister.getRegisterSize() == 0) {
@@ -58,7 +70,6 @@ public class RegisterDialogController {
      * If valid, Tries to register a patient, and gives the user a dialog to confirm it was successful.
      * If registering the Patient was unsuccessfully, catches the exception and shows exception message in a alert dialog. Should
      * normally not reach this point because of the validInput() first.
-     * <p>
      * ValidInput first is to check all input fields at once to improve user experience instead of one dialog box for each invalid input
      */
     public void handleRegisterOk() {
@@ -87,7 +98,7 @@ public class RegisterDialogController {
 
 
     /**
-     * Switch to primary controller
+     * Close the register dialog
      *
      * @throws IOException
      */

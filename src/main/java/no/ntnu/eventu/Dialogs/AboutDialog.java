@@ -6,7 +6,17 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import no.ntnu.eventu.Interfaces.DialogFactoryInterface;
 
+/**
+ * About dialog for the dialog factory
+ *
+ * @Author Eventu
+ */
 public class AboutDialog implements DialogFactoryInterface {
+
+    /**
+     * @return the dialog with information about the application
+     * show some basic information plus link to GitLab
+     */
     @Override
     public Dialog<ButtonType> getDialog() {
         Alert aboutAlert = new Alert(Alert.AlertType.INFORMATION);

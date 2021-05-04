@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 /**
  * Class to manage writing and saving data from patientregister to file
+ *
  * @author Eventu
  */
 public final class FileManager implements FileInterface {
@@ -25,10 +26,11 @@ public final class FileManager implements FileInterface {
      * Shows a FileChooser dialog to open file
      * If file type is of csv or CSV, reads file and fille patientregister
      * If file type is NOT csv or CSV, shows a dialog and return to primary window
+     *
      * @param patientRegister the patientregister which filedata will be added to
      * @throws FileNotFoundException
      */
-    public void openFile(PatientRegister patientRegister) throws FileNotFoundException, IllegalArgumentException, ArrayIndexOutOfBoundsException{
+    public void openFile(PatientRegister patientRegister) throws FileNotFoundException, IllegalArgumentException, ArrayIndexOutOfBoundsException {
         FileChooser fileChooser = new FileChooser();
         File file = new File(fileChooser.showOpenDialog(new Stage()).getAbsolutePath());
         if (getFileExtension(file.getAbsoluteFile().toString()).equals("CSV") || getFileExtension(file.getAbsoluteFile().toString()).equals("csv")) { //Only reads if file is csv or CSV
@@ -43,20 +45,20 @@ public final class FileManager implements FileInterface {
                     String gpractitioner = lineInfo[2];
                     String ssn = lineInfo[3];
                     String diagnosis = "";
-                    if (lineInfo.length > 4){ // If there is a diagnosis
+                    if (lineInfo.length > 4) { // If there is a diagnosis
                         diagnosis = lineInfo[4];
-                    }else { // if no diagnosis
+                    } else { // if no diagnosis
                         diagnosis = "";
                     }
-                    if (diagnosis.equals("null")){
+                    if (diagnosis.equals("null")) {
                         diagnosis = "";
                     }
-                    if (ssn.length() == 10){
-                        ssn = "0"+ssn;
+                    if (ssn.length() == 10) {
+                        ssn = "0" + ssn;
                     }
-                        patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner, diagnosis);
-                    }
+                    patientRegister.registerPatient(firstName, lastName, ssn, gpractitioner, diagnosis);
                 }
+            }
             scanner.close();
 
         } else {  //If file type is not csv
@@ -94,7 +96,7 @@ public final class FileManager implements FileInterface {
      * simple Method to check filetype of a name
      *
      * @param filename the filename to check, must include full filename with extension
-     * @return returns the extension of the file
+     * @return returns the extension of the file (after the dot)
      */
     private String getFileExtension(String filename) {
         String extension = "";

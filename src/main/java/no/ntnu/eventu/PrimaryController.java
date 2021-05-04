@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,11 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import no.ntnu.eventu.Dialogs.AboutDialog;
@@ -30,6 +27,11 @@ import no.ntnu.eventu.Dialogs.RemoveDialog;
 import no.ntnu.eventu.Exception.RemoveException;
 
 
+/**
+ * Controller class for the main window
+ *
+ * @Author Eventu
+ */
 public class PrimaryController {
 
 
@@ -80,20 +82,15 @@ public class PrimaryController {
     //filemanager
     FileManager fileManager = new FileManager();
 
+    //DialocFactory
     DialogFactory dialogFactory = new DialogFactory();
 
     private static String lastSaved = "";
 
 
     /**
-     * Just some test data
+     * Initializes each time the program starts
      */
-    public void fillWithTestData() {
-        patientRegister.registerPatient("Donald", "Trump", "16019295843", "A poor guy", "Nobody knows");
-        patientRegister.registerPatient("Mikke", "Mus", "02019112345", "Petter Smart", "Store ører");
-    }
-
-
     @FXML
     private void initialize() {
 
@@ -125,7 +122,6 @@ public class PrimaryController {
         // Update statuslabel every time primary controller loads
         updateStatusLabel();
 
-
         // Refresh table every time it is loaded
         refreshTable();
 
@@ -133,7 +129,7 @@ public class PrimaryController {
         patientsTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.isPrimaryButtonDown() && mouseEvent.getClickCount() == 2){
+                if (mouseEvent.isPrimaryButtonDown() && mouseEvent.getClickCount() == 2) {
                     try {
                         openEditPatient();
                     } catch (IOException e) {
@@ -241,7 +237,7 @@ public class PrimaryController {
 
     /**
      * Method to load data from a file
-     * If successfully loading, updates statusbar with sucessfull message,
+     * If successfully loading, updates statusbar with successful message,
      * if unsuccessful, update statusbar with errormessage.
      */
     private void loadFile() {
@@ -276,35 +272,17 @@ public class PrimaryController {
      * If user press yes, patient will be removed from register
      * If user presses no it will cancel
      */
-
     public void removePatient() {
         int selectedIndex = patientsTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex < 0) {
             NoPatientSelectedDialog noSelected = (NoPatientSelectedDialog) dialogFactory.getDialog(DialogFactory.DialogType.NoSelected);
             noSelected.getDialog().showAndWait();
-            /**
-             *
-
-            Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);
-            removeErrorAlert.setTitle("Error");
-            removeErrorAlert.setHeaderText("No patient selected");
-            removeErrorAlert.setContentText("Mark a patient in the table before pressing remove");
-            removeErrorAlert.showAndWait();
-             */
         } else {
-            /**
-             *
-
-            Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove patient?", ButtonType.YES, ButtonType.NO);
-            removeAlert.setTitle("Remove patient");
-            removeAlert.setHeaderText("Are you sure you want to remove this patient from the register?\nThis can`t be undone!");
-            removeAlert.setContentText("Press yes to confirm, no to cancel");
-            removeAlert.showAndWait(); */
             RemoveDialog removeDialog = (RemoveDialog) dialogFactory.getDialog(DialogFactory.DialogType.Remove);
-            if (removeDialog.getDialog().showAndWait().get() == ButtonType.YES){
-            //if (removeDialog.getResult() == ButtonType.YES) {
+            Optional<ButtonType> result = removeDialog.getDialog().showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.YES) {
 
-                // Get selected patient
+                // Get selected patient from table
                 TablePosition pos = patientsTable.getSelectionModel().getSelectedCells().get(0);
                 int row = pos.getRow();
                 Patient patientToRemove = patientsTable.getItems().get(row);
@@ -317,19 +295,15 @@ public class PrimaryController {
                     errorAlert.setContentText(i.getMessage() + "\nPlease try again.");
                     errorAlert.showAndWait();
                 }
-
-
-                //patientsTable.getItems().remove(selectedIndex);
             }
         }
         refreshTable();
-
-
     }
 
 
     /**
      * Open edit patient dialog
+     *
      * @throws IOException
      */
     @FXML
@@ -338,15 +312,6 @@ public class PrimaryController {
         if (selectedIndex < 0) { // If no in table patient is selected
             NoPatientSelectedDialog noSelected = (NoPatientSelectedDialog) dialogFactory.getDialog(DialogFactory.DialogType.NoSelected);
             noSelected.getDialog().showAndWait();
-            /**
-             *
-
-            Alert removeErrorAlert = new Alert(Alert.AlertType.ERROR, "No patient selected", ButtonType.OK);
-            removeErrorAlert.setTitle("Error");
-            removeErrorAlert.setHeaderText("No patient selected");
-            removeErrorAlert.setContentText("Mark a patient in the table before pressing edit");
-            removeErrorAlert.showAndWait();
-             */
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("editDialog.fxml"));
             Parent root = loader.load();
@@ -357,9 +322,7 @@ public class PrimaryController {
             int row = pos.getRow();
             Patient selectedPatient = patientsTable.getItems().get(row);
             String editSsn = selectedPatient.getSsn();
-
             editPatientController.editPatient(editSsn);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -371,16 +334,14 @@ public class PrimaryController {
 
 
     /**
-     * Switch to register new patient
+     * Opens the register new patient dialog
      *
      * @throws IOException
      */
     @FXML
     private void switchToRegister() throws IOException {
-       // App.setRoot("registerDialog");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("registerDialog.fxml"));
         Parent root = loader.load();
-        RegisterDialogController registerDialogControllerr = loader.getController();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -392,42 +353,11 @@ public class PrimaryController {
 
     /**
      * Opens a dialog when menuitem help is pressed
-     * Contains information about the app and link to GitLAb rep
-     * GitLab repo closed until due date for the assignment
+     * Contains information about the app and link to GitLAb repo
      */
     private void helpDialog() {
         AboutDialog aboutDialog = (AboutDialog) dialogFactory.getDialog(DialogFactory.DialogType.About);
         aboutDialog.getDialog().showAndWait();
-        /**
-         *
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        FlowPane fp = new FlowPane();
-        Label label = new Label("Application created by " +
-                "\n(C)Even Tuverud\n" +
-                "2021-04-20\n" +
-                "\n" +
-                "Check out my GitLab for more:\n");
-
-        Hyperlink hyperlink = new Hyperlink("https://gitlab.stud.idi.ntnu.no/eventu/patientregister");
-        Label bottomLabel = new Label("(Click link to copy to clipboard)");
-        hyperlink.setOnAction(event -> {
-                    final Clipboard clipboard = Clipboard.getSystemClipboard();
-                    final ClipboardContent content = new ClipboardContent();
-                    content.putString(hyperlink.getText());
-                    clipboard.setContent(content);
-                }
-        );
-        fp.getChildren().addAll(label, hyperlink, bottomLabel);
-        alert.getDialogPane().contentProperty().set(fp);
-        alert.setTitle("About");
-        alert.setHeaderText("Patient Register \nv0.1-SNAPSHOT");
-        ImageView imageView = new ImageView(this.getClass().getResource("images/info.png").toString());
-        imageView.setFitWidth(40);
-        imageView.setFitHeight(40);
-        alert.setGraphic(imageView);
-        alert.showAndWait();
-         */
     }
 
 
@@ -437,24 +367,10 @@ public class PrimaryController {
      */
     private void exitProgram() {
         ExitDialog exitDialog = (ExitDialog) dialogFactory.getDialog(DialogFactory.DialogType.Exit);
-        //Optional<ButtonType> result = exitDialog.getDialog().showAndWait();
-        //if (result.isPresent() && result.get() == ButtonType.YES){
-        if (exitDialog.getDialog().showAndWait().get() == ButtonType.YES){
+        if (exitDialog.getDialog().showAndWait().get() == ButtonType.YES) {
             Platform.exit();
             System.exit(0);
         }
-        /**
-         *
-
-        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit? \nAll unsaved progress will be lost!", ButtonType.YES, ButtonType.NO);
-        exitAlert.setTitle("Confirm exit");
-        exitAlert.setHeaderText("Exit application?");
-        exitAlert.setAlertType(Alert.AlertType.WARNING);
-        exitAlert.showAndWait();
-        if (exitAlert.getResult() == ButtonType.YES) {
-
-        }
-         */
     }
 
 
