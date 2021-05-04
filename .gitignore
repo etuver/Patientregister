@@ -6,4 +6,5 @@ Patients-Kopi.csv
 .idea
 target
 .target
-
+*/target/*
+*/target/**
